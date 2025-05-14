@@ -5,12 +5,13 @@ namespace App\Models;
 use App\Enum\RentalStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Property extends Model
+class Property extends Model implements Auditable
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes ;
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'title',
@@ -42,14 +43,9 @@ class Property extends Model
         'status' => RentalStatus::class,
     ];
 
-    public function rentalAnalyses(): HasMany
-    {
-        return $this->hasMany(RentalAnalysis::class);
-    }
-
-    // Método de escopo para propriedades disponíveis
-    public function scopeAvailable($query)
+    protected function available($query)
     {
         return $query->where('status', RentalStatus::AVAILABLE);
     }
+
 }
