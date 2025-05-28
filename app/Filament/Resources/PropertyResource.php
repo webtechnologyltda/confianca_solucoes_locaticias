@@ -3,22 +3,23 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PropertyResource\Pages;
-use App\Filament\Resources\PropertyResource\RelationManagers;
 use App\Models\Property;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
 
 class PropertyResource extends Resource
 {
     protected static ?string $model = Property::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'bi-houses-fill';
+
+    protected static ?string $label = 'Imóvel';
+
+    protected static ?string $pluralLabel = 'Imóveis';
 
     public static function form(Form $form): Form
     {

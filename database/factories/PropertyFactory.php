@@ -26,7 +26,7 @@ class PropertyFactory extends Factory
             'zip_code' => fake()->postcode(),
             'rental_price' => fake()->randomFloat(2, 500, 5000),
             'condo_fee' => fake()->optional()->randomFloat(2, 50, 500),
-            'status' => fake()->randomElement([RentalStatus::AVAILABLE->value, RentalStatus::RENTED->value, RentalStatus::MAINTENANCE->value, RentalStatus::RESERVED->value]),
+            'status' => fake()->randomElement(RentalStatus::cases()),
             'description' => fake()->paragraph(),
         ];
     }

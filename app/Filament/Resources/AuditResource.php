@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-
 use App\Filament\Resources\AuditResource\Pages;
 use App\Models\Audit;
 use App\Models\User;
@@ -48,7 +47,7 @@ class AuditResource extends Resource implements HasShieldPermissions
                         Forms\Components\Hidden::make('user_type'),
                         Forms\Components\TextInput::make('username')
                             ->afterStateHydrated(function (Forms\Get $get, Forms\Set $set) {
-                                if (!empty($get('user_type')) && !empty($get('user_id'))) {
+                                if (! empty($get('user_type')) && ! empty($get('user_id'))) {
                                     $set('username', $get('user_type')::find($get('user_id'))?->name);
                                 } else {
                                     $set('username', 'Sem Usuário Definido');
@@ -85,14 +84,14 @@ class AuditResource extends Resource implements HasShieldPermissions
                             ->numeric(),
 
                         JsonColumn::make('old_values')
-                            ->hidden(fn(Forms\Get $get) => $get('event') === 'created')
+                            ->hidden(fn (Forms\Get $get) => $get('event') === 'created')
                             ->label('Valores Antigos')
                             ->viewerOnly()
                             ->columnSpanFull(),
 
                         JsonColumn::make('new_values')
                             ->label('Valores Novos')
-                            ->hidden(fn(Forms\Get $get) => $get('event') === 'deleted')
+                            ->hidden(fn (Forms\Get $get) => $get('event') === 'deleted')
                             ->viewerOnly()
                             ->columnSpanFull(),
 
@@ -115,17 +114,18 @@ class AuditResource extends Resource implements HasShieldPermissions
                                     ->hiddenLabel()
                                     ->content(function ($state, Forms\Set $set) {
                                         $agent = self::parseUserAgent($state);
+
                                         return new HtmlString('<div class="flex flex-col items-center">
-                                            <span>' . $agent['tipo_dispositivo'] . '</span>
-                                            <span class="flex flex-row justify-center items-center"> ' . $agent['sistema_operacional'] . '</span>
-                                            <span class="flex flex-row justify-center items-center">' . $agent['navegador'] . '</span>
+                                            <span>'.$agent['tipo_dispositivo'].'</span>
+                                            <span class="flex flex-row justify-center items-center"> '.$agent['sistema_operacional'].'</span>
+                                            <span class="flex flex-row justify-center items-center">'.$agent['navegador'].'</span>
                                         </div>');
                                     }),
                             ]),
 
                         Forms\Components\TagsInput::make('tags')
                             ->placeholder('Nenhuma tag informada!'),
-                    ])
+                    ]),
             ]);
     }
 
@@ -173,10 +173,11 @@ class AuditResource extends Resource implements HasShieldPermissions
                     ->label('Dispositivo')
                     ->formatStateUsing(function ($state) {
                         $agent = self::parseUserAgent($state);
+
                         return new HtmlString('<div class="flex flex-col">
-                                <span>' . $agent['tipo_dispositivo'] . '</span>
-                                <span class="flex flex-row justify-center items-center"> ' . $agent['sistema_operacional'] . '</span>
-                                <span class="flex flex-row justify-center items-center">' . $agent['navegador'] . '</span>
+                                <span>'.$agent['tipo_dispositivo'].'</span>
+                                <span class="flex flex-row justify-center items-center"> '.$agent['sistema_operacional'].'</span>
+                                <span class="flex flex-row justify-center items-center">'.$agent['navegador'].'</span>
                             </div>');
                     })
                     ->searchable(),
@@ -247,13 +248,13 @@ class AuditResource extends Resource implements HasShieldPermissions
                         return $query
                             ->when(
                                 $data['created_from'],
-                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
                             )
                             ->when(
                                 $data['created_until'],
-                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
                             );
-                    })
+                    }),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -285,39 +286,39 @@ class AuditResource extends Resource implements HasShieldPermissions
 
         // Detecta sistema operacional
         if (preg_match('/Android/i', $userAgent)) {
-            $os = Blade::render('<x-eos-android class="w-4 h-4 text-lime-400 mr-1.5" />') . ' Android';
+            $os = Blade::render('<x-eos-android class="w-4 h-4 text-lime-400 mr-1.5" />').' Android';
             $deviceType = '📱 Celular';
         } elseif (preg_match('/iPhone/i', $userAgent)) {
-            $os = Blade::render('<x-bi-apple class="w-4 h-4 text-gray-200 mr-1.5" />') . ' iOS';
+            $os = Blade::render('<x-bi-apple class="w-4 h-4 text-gray-200 mr-1.5" />').' iOS';
             $deviceType = '📱 iPhone';
         } elseif (preg_match('/iPad/i', $userAgent)) {
-            $os = Blade::render('<x-bi-apple class="w-4 h-4 text-gray-200 mr-1.5" />') . ' iOS';
+            $os = Blade::render('<x-bi-apple class="w-4 h-4 text-gray-200 mr-1.5" />').' iOS';
             $deviceType = '📱 iPad';
         } elseif (preg_match('/iPod/i', $userAgent)) {
-            $os = Blade::render('<x-bi-apple class="w-4 h-4 text-gray-200 mr-1.5" />') . ' iOS';
+            $os = Blade::render('<x-bi-apple class="w-4 h-4 text-gray-200 mr-1.5" />').' iOS';
             $deviceType = 'iPod';
         } elseif (preg_match('/Windows Phone/i', $userAgent)) {
-            $os = Blade::render('<x-bi-windows class="w-4 h-4 text-cyan-500 mr-1.5" />') . ' Windows Phone';
+            $os = Blade::render('<x-bi-windows class="w-4 h-4 text-cyan-500 mr-1.5" />').' Windows Phone';
             $deviceType = '📱 Celular';
         } elseif (preg_match('/Windows NT 10.0/i', $userAgent)) {
-            $os = Blade::render('<x-bi-windows class="w-4 h-4 text-cyan-500 mr-1.5" />') . ' Windows 10/11';
+            $os = Blade::render('<x-bi-windows class="w-4 h-4 text-cyan-500 mr-1.5" />').' Windows 10/11';
         } elseif (preg_match('/Windows NT 6.3/i', $userAgent)) {
-            $os = Blade::render('<x-gmdi-window-s class="w-4 h-4 text-white mr-1.5" />') . ' Windows 8.1';
+            $os = Blade::render('<x-gmdi-window-s class="w-4 h-4 text-white mr-1.5" />').' Windows 8.1';
         } elseif (preg_match('/Windows NT 6.1/i', $userAgent)) {
-            $os = Blade::render('<x-icomoon-windows class="w-4 h-4 text-white mr-1.5" />') . ' Windows 7';
+            $os = Blade::render('<x-icomoon-windows class="w-4 h-4 text-white mr-1.5" />').' Windows 7';
         } elseif (preg_match('/Macintosh|Mac OS X/i', $userAgent)) {
-            $os = Blade::render('<x-bi-apple class="w-4 h-4 text-gray-200 mr-1.5" />') . ' Mac OS';
+            $os = Blade::render('<x-bi-apple class="w-4 h-4 text-gray-200 mr-1.5" />').' Mac OS';
         } elseif (preg_match('/Linux/i', $userAgent)) {
-            $os = Blade::render('<img class="w-4 h-4  mr-1.5" src="' . asset('img/auditoria/linux.png') . '" alt="" />') . ' Linux';
+            $os = Blade::render('<img class="w-4 h-4  mr-1.5" src="'.asset('img/auditoria/linux.png').'" alt="" />').' Linux';
         }
 
         // Detecta navegador
         if (preg_match('/Chrome\/([0-9.]+)/i', $userAgent, $matches)) {
-            $browser = Blade::render('<img class="w-4 h-4  mr-1.5" src="' . asset('img/auditoria/chrome.png') . '" alt="" />') . ' Chrome v' . $matches[1];
+            $browser = Blade::render('<img class="w-4 h-4  mr-1.5" src="'.asset('img/auditoria/chrome.png').'" alt="" />').' Chrome v'.$matches[1];
         } elseif (preg_match('/Firefox\/([0-9.]+)/i', $userAgent, $matches)) {
-            $browser = Blade::render('<img class="w-4 h-4  mr-1.5" src="' . asset('img/auditoria/firefox.png') . '" alt="" />') . 'Firefox v' . $matches[1];
-        } elseif (preg_match('/Safari\/([0-9.]+)/i', $userAgent) && !preg_match('/Chrome/i', $userAgent)) {
-            $browser = Blade::render('<img class="w-4 h-4  mr-1.5" src="' . asset('img/auditoria/safari.png') . '" alt="" />') . 'Safari';
+            $browser = Blade::render('<img class="w-4 h-4  mr-1.5" src="'.asset('img/auditoria/firefox.png').'" alt="" />').'Firefox v'.$matches[1];
+        } elseif (preg_match('/Safari\/([0-9.]+)/i', $userAgent) && ! preg_match('/Chrome/i', $userAgent)) {
+            $browser = Blade::render('<img class="w-4 h-4  mr-1.5" src="'.asset('img/auditoria/safari.png').'" alt="" />').'Safari';
         }
 
         return [
