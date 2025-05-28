@@ -12,6 +12,7 @@ class Tenant extends Model implements Auditable
 {
     use HasFactory, SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+
     protected $fillable = [
         'name',
         'document_id',

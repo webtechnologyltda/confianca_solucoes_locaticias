@@ -10,7 +10,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Property extends Model implements Auditable
 {
-    use HasFactory, SoftDeletes ;
+    use HasFactory, SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
@@ -47,5 +47,4 @@ class Property extends Model implements Auditable
     {
         return $query->where('status', RentalStatus::AVAILABLE);
     }
-
 }

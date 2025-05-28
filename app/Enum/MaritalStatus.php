@@ -5,7 +5,7 @@ namespace App\Enum;
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
-enum MaritalStatus: int implements HasLabel, HasColor
+enum MaritalStatus: int implements HasColor, HasLabel
 {
     case SINGLE = 1;
     case MARRIED = 2;
@@ -16,7 +16,7 @@ enum MaritalStatus: int implements HasLabel, HasColor
 
     public function getLabel(): string
     {
-        return match($this) {
+        return match ($this) {
             self::SINGLE => 'Solteiro(a)',
             self::MARRIED => 'Casado(a)',
             self::DIVORCED => 'Divorciado(a)',
@@ -28,7 +28,7 @@ enum MaritalStatus: int implements HasLabel, HasColor
 
     public function getColor(): string
     {
-        return match($this) {
+        return match ($this) {
             self::SINGLE => 'warning',
             self::MARRIED => 'success',
             self::DIVORCED => 'danger',

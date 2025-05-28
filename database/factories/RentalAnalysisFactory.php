@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enum\RentalStatus;
+use App\Enum\AnalysisStatus;
 use App\Models\Property;
 use App\Models\Tenant;
 use App\Models\User;
@@ -22,14 +22,14 @@ class RentalAnalysisFactory extends Factory
     public function definition(): array
     {
         return [
-            'tenant_id' => fake()->numberBetween(Tenant::count(),10),
-            'property_id' => fake()->numberBetween(Property::count(),10),
-            'status' => fake()->randomElement([RentalStatus::AVAILABLE->value,RentalStatus::RENTED->value,RentalStatus::MAINTENANCE->value,RentalStatus::RESERVED->value]),
+            'tenant_id' => fake()->numberBetween(Tenant::count(), 10),
+            'property_id' => fake()->numberBetween(Property::count(), 10),
+            'status' => fake()->randomElement(AnalysisStatus::cases()),
             'credit_score' => fake()->optional()->randomFloat(2, 0, 1000),
             'observations' => fake()->text(),
             'analysis_document' => fake()->optional()->filePath(),
             'analysis_date' => Carbon::now()->format('Y-m-d'),
-            'analyst_id' => fake()->numberBetween(User::count(),10),
+            'analyst_id' => fake()->numberBetween(User::count(), 10),
         ];
     }
 }

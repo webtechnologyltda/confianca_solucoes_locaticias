@@ -27,6 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->passwordReset()
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -52,10 +53,9 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->plugins([
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),])
-                 ->authMiddleware([
-                            Authenticate::class,
-                        ]);
-                }
-            }
-
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(), ])
+            ->authMiddleware([
+                Authenticate::class,
+            ]);
+    }
+}

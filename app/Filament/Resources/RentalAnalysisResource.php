@@ -3,22 +3,23 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\RentalAnalysisResource\Pages;
-use App\Filament\Resources\RentalAnalysisResource\RelationManagers;
 use App\Models\RentalAnalysis;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
 
 class RentalAnalysisResource extends Resource
 {
     protected static ?string $model = RentalAnalysis::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $label = 'Análise de Aluguel';
+
+    protected static ?string $pluralLabel = 'Análises de Aluguel';
+
+    protected static ?string $navigationIcon = 'carbon-text-link-analysis';
 
     public static function form(Form $form): Form
     {
@@ -52,33 +53,45 @@ class RentalAnalysisResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('tenant.name')
                     ->numeric()
+                    ->label('Proprietário')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('property.id')
                     ->numeric()
+                    ->label('Cód. Imóvel')
+                    ->alignCenter()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
+                    ->label('Status')
+                    ->alignCenter()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('credit_score')
                     ->numeric()
+                    ->label('Score de Crédito')
+                    ->alignCenter()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('analysis_document')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('analysis_date')
-                    ->dateTime()
+                    ->dateTime('d/m/Y H:i:s')
+                    ->alignCenter()
+                    ->label('Data da Análise')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('analyst.name')
-                    ->numeric()
+                    ->alignCenter()
+                    ->label('Analista')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
+                    ->dateTime('d/m/Y H:i:s')
+                    ->label('Data de Exclusão')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->dateTime('d/m/Y H:i:s')
+                    ->label('Data de Criação')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('d/m/Y H:i:s')
+                    ->label('Data de Alteração')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
