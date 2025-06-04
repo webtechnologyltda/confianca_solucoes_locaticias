@@ -2,9 +2,12 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\RentalAnalysisResource\Form\RentalAnalysisResourceForm;
 use App\Filament\Resources\RentalAnalysisResource\Pages;
 use App\Models\RentalAnalysis;
 use Filament\Forms;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -21,29 +24,17 @@ class RentalAnalysisResource extends Resource
 
     protected static ?string $navigationIcon = 'carbon-text-link-analysis';
 
+    protected static ?int $navigationSort = 0;
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('tenant_id')
-                    ->relationship('tenant', 'name')
-                    ->required(),
-                Forms\Components\Select::make('property_id')
-                    ->relationship('property', 'id')
-                    ->required(),
-                Forms\Components\TextInput::make('status')
-                    ->maxLength(255)
-                    ->default(1),
-                Forms\Components\TextInput::make('credit_score')
-                    ->numeric(),
-                Forms\Components\Textarea::make('observations')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('analysis_document')
-                    ->maxLength(255),
-                Forms\Components\DateTimePicker::make('analysis_date'),
-                Forms\Components\Select::make('analyst_id')
-                    ->relationship('analyst', 'name')
-                    ->required(),
+                Wizard::make()
+                    ->columnSpanFull()
+                    ->schema(
+                    RentalAnalysisResourceForm::getSteps()
+                    ),
             ]);
     }
 
@@ -113,6 +104,11 @@ class RentalAnalysisResource extends Resource
         return [
             AuditsRelationManager::class,
         ];
+    }
+    public static function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['analyst_id'] = auth()->id();
+        return $data;
     }
 
     public static function getPages(): array

@@ -8,4 +8,5 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateRentalAnalysis extends CreateRecord
 {
     protected static string $resource = RentalAnalysisResource::class;
+
 }

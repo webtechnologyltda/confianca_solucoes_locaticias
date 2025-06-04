@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enum\PropertyType;
 use App\Enum\RentalStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,13 +22,13 @@ class PropertyFactory extends Factory
             'street_address' => fake()->streetAddress(),
             'number' => fake()->buildingNumber(),
             'complement' => fake()->secondaryAddress(),
+            'neighborhood' => fake()->secondaryAddress(),
             'city' => fake()->city(),
             'state' => fake()->stateAbbr(),
             'zip_code' => fake()->postcode(),
-            'rental_price' => fake()->randomFloat(2, 500, 5000),
-            'condo_fee' => fake()->optional()->randomFloat(2, 50, 500),
             'status' => fake()->randomElement(RentalStatus::cases()),
             'description' => fake()->paragraph(),
+            'type' => fake()->randomElement(PropertyType::cases()),
         ];
     }
 }

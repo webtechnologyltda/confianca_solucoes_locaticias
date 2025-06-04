@@ -6,6 +6,8 @@ use App\Enum\AnalysisStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
@@ -15,10 +17,12 @@ class RentalAnalysis extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
-        'tenant_id',
         'property_id',
         'status',
         'credit_score',
+        'tax',
+        'other_tax',
+        'house_rental_value',
         'observations',
         'analysis_document',
         'analysis_date',
@@ -27,18 +31,21 @@ class RentalAnalysis extends Model implements Auditable
 
     protected $casts = [
         'analysis_date' => 'date',
-        'credit_score' => 'decimal:2',
+        'analysis_document' => 'array',
+        'credit_score' => 'integer',
         'status' => AnalysisStatus::class,
     ];
-
-    public function tenant(): BelongsTo
-    {
-        return $this->belongsTo(Tenant::class);
-    }
 
     public function property(): BelongsTo
     {
         return $this->belongsTo(Property::class);
+    }
+
+    public function tenants(): BelongsToMany
+    {
+        return $this->belongsToMany(Tenant::class)
+            ->withTimestamps()
+            ->using(RentalAnalysisTenant::class);
     }
 
     public function analyst(): BelongsTo
@@ -46,9 +53,14 @@ class RentalAnalysis extends Model implements Auditable
         return $this->belongsTo(User::class, 'analyst_id');
     }
 
-    // Método de escopo para análises pendentes
-    public function scopePending($query)
+    public function realEstateAgent(): BelongsTo
     {
-        return $query->where('status', AnalysisStatus::PENDING);
+        return $this->belongsTo(RealEstateAgent::class);
     }
+
+    public function rentalAnalysisTenants() : HasMany
+    {
+        return $this->hasMany(RentalAnalysisTenant::class);
+    }
+
 }

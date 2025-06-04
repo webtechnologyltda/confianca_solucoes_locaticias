@@ -14,32 +14,22 @@ class Property extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
-        'title',
         'street_address',
         'number',
         'complement',
-        'neighborhood',
         'city',
+        'neighborhood',
         'state',
         'zip_code',
-        'rental_price',
-        'property_tax',
-        'condo_fee',
-        'total_area',
-        'bedrooms',
-        'bathrooms',
-        'parking_spaces',
         'status',
         'description',
-        'features',
+        'type',
+        'owner_name',
+        'owner_phone',
+        'owner_email',
     ];
 
     protected $casts = [
-        'rental_price' => 'decimal:2',
-        'property_tax' => 'decimal:2',
-        'condo_fee' => 'decimal:2',
-        'total_area' => 'decimal:2',
-        'features' => 'array',
         'status' => RentalStatus::class,
     ];
 
