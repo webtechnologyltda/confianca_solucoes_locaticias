@@ -24,8 +24,8 @@ class DatabaseSeeder extends Seeder
         if (config('app.env') === 'local') {
             $this->call([
                 UserSeeder::class,
-                TenantSeeder::class,
                 PropertySeeder::class,
+                RealEstateAgentSeeder::class,
                 RentalAnalysisSeeder::class,
                 ShieldSeeder::class,
             ]);

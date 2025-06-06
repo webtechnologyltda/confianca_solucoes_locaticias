@@ -11,19 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tenants', function (Blueprint $table) {
+        Schema::create('real_estate_agents', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('cpf')->unique()->nullable();
-            $table->date('birth_date')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('phone')->nullable();
-            $table->integer('monthly_income')->nullable();
-            $table->string('occupation')->nullable();
-            $table->integer('marital_status')->nullable();
-            $table->text('additional_notes')->nullable();
+            $table->string('creci')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -32,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tenants');
+        Schema::dropIfExists('real_estate_agents');
     }
 };
