@@ -1,6 +1,5 @@
 <?php
 
-use App\Enum\MaritalStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,11 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('cpf')->unique()->nullable();
-            $table->string('rg')->nullable();
             $table->date('birth_date')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('phone')->nullable();
-            $table->decimal('monthly_income', 10, 2)->nullable();
+            $table->integer('monthly_income')->nullable();
             $table->string('occupation')->nullable();
             $table->integer('marital_status')->nullable();
             $table->text('additional_notes')->nullable();

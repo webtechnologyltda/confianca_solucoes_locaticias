@@ -2,89 +2,58 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\TenantResource\Form\TenantForm;
 use App\Filament\Resources\TenantResource\Pages;
-use App\Filament\Resources\TenantResource\RelationManagers;
 use App\Models\Tenant;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
 
 class TenantResource extends Resource
 {
     protected static ?string $model = Tenant::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'fluentui-person-money-20';
+
+    protected static ?string $label = 'Inquilino';
+
+    protected static ?string $pluralLabel = 'Inquilinos';
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('cpf')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('rg')
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('birth_date'),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('phone')
-                    ->tel()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('monthly_income')
-                    ->numeric(),
-                Forms\Components\TextInput::make('occupation')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('marital_status')
-                    ->numeric(),
-                Forms\Components\Textarea::make('additional_notes')
-                    ->columnSpanFull(),
-            ]);
+            ->schema(TenantForm::getFormSchema());
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
+
+                Tables\Columns\TextColumn::make('id')
+                    ->label('Código')
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nome')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('cpf')
+                    ->label('CPF')
+                    ->formatStateUsing(fn ($state) => cpfFormat($state))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('rg')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('birth_date')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('phone')
+                    ->label('Telefone')
+                    ->formatStateUsing(fn ($state) => phoneFormatAndCellPhone($state))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('monthly_income')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('occupation')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('marital_status')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+
+
             ])
             ->filters([
                 //
@@ -93,16 +62,14 @@ class TenantResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            AuditsRelationManager::class,
         ];
     }
 

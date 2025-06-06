@@ -14,14 +14,16 @@ return new class extends Migration
     {
         Schema::create('rental_analyses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tenant_id')->constrained();
             $table->foreignId('property_id')->constrained();
             $table->string('status')->default(AnalysisStatus::PENDING)->nullable();
-            $table->decimal('credit_score', 5, 2)->nullable();
+            $table->integer('credit_score')->nullable();
+            $table->integer('tax')->nullable();
+            $table->integer('other_tax')->nullable();
+            $table->integer('house_rental_value')->nullable();
             $table->text('observations')->nullable();
-            $table->string('analysis_document')->nullable();
             $table->datetime('analysis_date')->nullable();
             $table->foreignId('analyst_id')->constrained('users');
+            $table->foreignId('real_estate_agent_id')->constrained('real_estate_agents');
             $table->timestamps();
             $table->softDeletes();
         });

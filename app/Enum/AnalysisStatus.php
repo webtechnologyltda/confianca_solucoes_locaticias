@@ -5,17 +5,16 @@ namespace App\Enum;
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
-enum AnalysisStatus: int implements HasLabel, HasColor
+enum AnalysisStatus: int implements HasColor, HasLabel
 {
     case PENDING = 1;
     case APPROVED = 2;
     case REJECTED = 3;
     case IN_REVIEW = 4;
 
-
     public function getLabel(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDING => 'Pedente',
             self::APPROVED => 'Aprovado',
             self::REJECTED => 'Rejeitado',
@@ -26,7 +25,7 @@ enum AnalysisStatus: int implements HasLabel, HasColor
 
     public function getColor(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDING => 'warning',
             self::APPROVED => 'success',
             self::REJECTED => 'danger',

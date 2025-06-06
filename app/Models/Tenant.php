@@ -4,12 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Tenant extends Model
+class Tenant extends Model implements Auditable
 {
     use HasFactory, SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
+
     protected $fillable = [
         'name',
         'document_id',
@@ -28,8 +32,10 @@ class Tenant extends Model
         'monthly_income' => 'decimal:2',
     ];
 
-    public function rentalAnalyses(): HasMany
+    public function rentalAnalyses(): BelongsToMany
     {
-        return $this->hasMany(RentalAnalysis::class);
+        return $this->belongsToMany(RentalAnalysis::class)
+            ->withTimestamps()
+            ->using(RentalAnalysisTenant::class);
     }
 }

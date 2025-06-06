@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\RentalAnalysis;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Tenant;
 use Illuminate\Database\Seeder;
 
 class RentalAnalysisSeeder extends Seeder
@@ -13,6 +13,6 @@ class RentalAnalysisSeeder extends Seeder
      */
     public function run(): void
     {
-        RentalAnalysis::factory(10)->create();
+        RentalAnalysis::factory(10)->hasAttached(Tenant::factory(rand(1, 10)))->create();
     }
 }

@@ -15,16 +15,26 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
+        $adminUser = User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@admin.com',
             'password' => bcrypt('admin'),
         ]);
-        $this->call([
-            UserSeeder::class,
-            TenantSeeder::class,
-            PropertySeeder::class,
-            RentalAnalysisSeeder::class,
-        ]);
+
+        if (config('app.env') === 'local') {
+            $this->call([
+                UserSeeder::class,
+                PropertySeeder::class,
+                RealEstateAgentSeeder::class,
+                RentalAnalysisSeeder::class,
+                ShieldSeeder::class,
+            ]);
+        } else {
+            $this->call([
+                ShieldSeeder::class,
+            ]);
+        }
+
+        $adminUser->assignRole('super_admin');
     }
 }
