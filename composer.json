@@ -17,6 +17,7 @@
         "codeat3/blade-microns": "^1.6",
         "codeat3/blade-mono-icons": "^1.5",
         "davidhsianturi/blade-bootstrap-icons": "^2.0",
+        "fakerphp/faker": "^1.23",
         "filament/filament": "3.3",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
@@ -28,7 +29,6 @@
         "valentin-morice/filament-json-column": "^2.0"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.23",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.22",
         "laravel/sail": "^1.41",

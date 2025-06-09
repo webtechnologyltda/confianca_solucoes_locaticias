@@ -31,6 +31,8 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Green,
             ])
+            ->brandLogo(asset('img/logo.png'))
+            ->brandLogoHeight(  !str_contains(url()->current(), '/admin/login') ? '60px' : '120px')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
