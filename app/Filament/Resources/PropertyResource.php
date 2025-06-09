@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PropertyResource\Form\PropertyForm;
 use App\Filament\Resources\PropertyResource\Pages;
 use App\Models\Property;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -21,6 +20,8 @@ class PropertyResource extends Resource
     protected static ?string $label = 'Imóvel';
 
     protected static ?string $pluralLabel = 'Imóveis';
+
+    protected static ?string $navigationGroup = 'Cadastros';
 
     protected static ?int $navigationSort = 1;
 

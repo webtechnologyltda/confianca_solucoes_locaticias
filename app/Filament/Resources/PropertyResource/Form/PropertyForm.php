@@ -4,7 +4,6 @@ namespace App\Filament\Resources\PropertyResource\Form;
 
 use App\Enum\PropertyType;
 use App\Enum\RentalStatus;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -27,7 +26,7 @@ abstract class PropertyForm
 
                     Select::make('status')
                         ->label('Status')
-                        ->default( RentalStatus::UNAVAILABLE->value)
+                        ->default(RentalStatus::UNAVAILABLE->value)
                         ->options(RentalStatus::class),
 
                     Cep::make('zip_code')
@@ -48,7 +47,7 @@ abstract class PropertyForm
                                 'complement' => 'complemento',
                                 'neighborhood' => 'bairro',
                                 'city' => 'localidade',
-                                'state' => 'uf'
+                                'state' => 'uf',
                             ]
                         ),
 
@@ -80,8 +79,7 @@ abstract class PropertyForm
                     Textarea::make('description')
                         ->label('Descrição')
                         ->columnSpanFull(),
-                ])
+                ]),
         ];
     }
-
 }

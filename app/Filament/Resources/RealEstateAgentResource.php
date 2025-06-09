@@ -4,15 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RealEstateAgentResource\Form\RealEstateAgentForm;
 use App\Filament\Resources\RealEstateAgentResource\Pages;
-use App\Filament\Resources\RealEstateAgentResource\RelationManagers;
 use App\Models\RealEstateAgent;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RealEstateAgentResource extends Resource
 {
@@ -23,6 +19,8 @@ class RealEstateAgentResource extends Resource
     protected static ?string $label = 'Corretor';
 
     protected static ?string $pluralLabel = 'Corretores';
+
+    protected static ?string $navigationGroup = 'Cadastros';
 
     protected static ?int $navigationSort = 3;
 
