@@ -7,7 +7,6 @@ use Filament\Forms\Components\TextInput;
 
 abstract class RealEstateAgentForm
 {
-
     public static function getFormSchema(): array
     {
         return [
@@ -33,9 +32,8 @@ abstract class RealEstateAgentForm
 
                     TextInput::make('creci')
                         ->label('CRECI'),
-            ])
+                ]),
 
         ];
     }
-
 }

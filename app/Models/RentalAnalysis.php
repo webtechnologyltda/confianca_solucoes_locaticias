@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
@@ -27,6 +28,7 @@ class RentalAnalysis extends Model implements Auditable
         'analysis_document',
         'analysis_date',
         'analyst_id',
+        'real_estate_agent_id',
     ];
 
     protected $casts = [
@@ -58,9 +60,13 @@ class RentalAnalysis extends Model implements Auditable
         return $this->belongsTo(RealEstateAgent::class);
     }
 
-    public function rentalAnalysisTenants() : HasMany
+    public function rentalAnalysisTenants(): HasMany
     {
         return $this->hasMany(RentalAnalysisTenant::class);
     }
 
+    public function documents(): MorphMany
+    {
+        return $this->morphMany(Document::class, 'documentable');
+    }
 }

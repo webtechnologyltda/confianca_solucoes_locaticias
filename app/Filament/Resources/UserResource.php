@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UserResource\Form\UserForm;
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -21,6 +20,8 @@ class UserResource extends Resource
     protected static ?string $label = 'Usuário';
 
     protected static ?string $pluralLabel = 'Usuários';
+
+    protected static ?string $navigationGroup = 'Cadastros';
 
     protected static ?int $navigationSort = 4;
 

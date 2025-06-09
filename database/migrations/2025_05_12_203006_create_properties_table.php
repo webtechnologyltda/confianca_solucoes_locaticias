@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('zip_code')->nullable();
             $table->integer('status')->default(RentalStatus::AVAILABLE);
             $table->text('description')->nullable();
-            $table->integer('type')->default(PropertyType ::APARTMENT->value)->nullable();
+            $table->integer('type')->default(PropertyType::APARTMENT->value)->nullable();
             $table->string('owner_name')->nullable();
             $table->string('owner_phone')->nullable();
             $table->string('owner_email')->nullable();

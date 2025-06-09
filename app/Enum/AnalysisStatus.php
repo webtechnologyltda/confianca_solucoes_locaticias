@@ -10,15 +10,13 @@ enum AnalysisStatus: int implements HasColor, HasLabel
     case PENDING = 1;
     case APPROVED = 2;
     case REJECTED = 3;
-    case IN_REVIEW = 4;
 
     public function getLabel(): string
     {
         return match ($this) {
-            self::PENDING => 'Pedente',
+            self::PENDING => 'Em análise',
             self::APPROVED => 'Aprovado',
-            self::REJECTED => 'Rejeitado',
-            self::IN_REVIEW => 'Em revisão',
+            self::REJECTED => 'Reprovado',
             default => 'Não Informado'
         };
     }
@@ -29,8 +27,16 @@ enum AnalysisStatus: int implements HasColor, HasLabel
             self::PENDING => 'warning',
             self::APPROVED => 'success',
             self::REJECTED => 'danger',
-            self::IN_REVIEW => 'info',
             default => 'gray'
+        };
+    }
+
+    public function getIcon(): ?string
+    {
+        return match ($this) {
+            self::PENDING => 'heroicon-s-clock',
+            self::APPROVED => 'microns-pass',
+            self::REJECTED => 'eos-cancel',
         };
     }
 }

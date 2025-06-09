@@ -33,4 +33,14 @@ enum RentalStatus: int implements HasColor, HasLabel
             default => 'gray'
         };
     }
+
+    public function getIcon(): ?string
+    {
+        return match ($this) {
+            self::AVAILABLE => 'fas-lock-open',
+            self::RENTED => 'gmdi-attach-money-s',
+            self::UNAVAILABLE => 'eos-cancel',
+            self::RESERVED => 'fas-lock'
+        };
+    }
 }
