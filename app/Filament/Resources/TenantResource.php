@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\TenantResource\Form\TenantForm;
 use App\Filament\Resources\TenantResource\Pages;
 use App\Models\Tenant;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -21,6 +20,8 @@ class TenantResource extends Resource
     protected static ?string $label = 'Inquilino';
 
     protected static ?string $pluralLabel = 'Inquilinos';
+
+    protected static ?string $navigationGroup = 'Cadastros';
 
     protected static ?int $navigationSort = 2;
 
@@ -52,7 +53,6 @@ class TenantResource extends Resource
                     ->label('Telefone')
                     ->formatStateUsing(fn ($state) => phoneFormatAndCellPhone($state))
                     ->searchable(),
-
 
             ])
             ->filters([

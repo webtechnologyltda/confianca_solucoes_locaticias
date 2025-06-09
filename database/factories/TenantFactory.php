@@ -3,13 +3,10 @@
 namespace Database\Factories;
 
 use App\Enum\MaritalStatus;
-use App\Models\RentalAnalysisTenant;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
 
 class TenantFactory extends Factory
 {
-
     public function definition(): array
     {
         return [
@@ -24,5 +21,4 @@ class TenantFactory extends Factory
             'additional_notes' => fake()->text(),
         ];
     }
-
 }

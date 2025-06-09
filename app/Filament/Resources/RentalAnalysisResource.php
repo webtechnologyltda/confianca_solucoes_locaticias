@@ -2,15 +2,16 @@
 
 namespace App\Filament\Resources;
 
+use App\Enum\AnalysisStatus;
 use App\Filament\Resources\RentalAnalysisResource\Form\RentalAnalysisResourceForm;
 use App\Filament\Resources\RentalAnalysisResource\Pages;
 use App\Models\RentalAnalysis;
-use Filament\Forms;
-use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
 
@@ -29,65 +30,52 @@ class RentalAnalysisResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Wizard::make()
-                    ->columnSpanFull()
-                    ->schema(
-                    RentalAnalysisResourceForm::getSteps()
-                    ),
-            ]);
+            ->schema(
+                RentalAnalysisResourceForm::getTabs()
+            );
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('tenant.name')
-                    ->numeric()
-                    ->label('Proprietário')
+
+                Tables\Columns\TextColumn::make('id')
+                    ->label('Código')
+                    ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('property.id')
-                    ->numeric()
-                    ->label('Cód. Imóvel')
-                    ->alignCenter()
+
+                Tables\Columns\TextColumn::make('tenants.name')
+                    ->label('Inquilino')
+                    ->searchable()
+                    ->limit( 50 )
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
-                    ->alignCenter()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('credit_score')
-                    ->numeric()
-                    ->label('Score de Crédito')
-                    ->alignCenter()
+                    ->alignCenter(),
+
+                Tables\Columns\TextColumn::make('realEstateAgent.name')
+                    ->label('Corretor')
+                    ->limit( 50 )
+                    ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('analysis_date')
-                    ->dateTime('d/m/Y H:i:s')
-                    ->alignCenter()
-                    ->label('Data da Análise')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('analyst.name')
-                    ->alignCenter()
-                    ->label('Analista')
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime('d/m/Y H:i:s')
-                    ->label('Data de Exclusão')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime('d/m/Y H:i:s')
-                    ->label('Data de Criação')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime('d/m/Y H:i:s')
-                    ->label('Data de Alteração')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+
+
+
+            ])
+            ->defaultSort('created_at', 'desc')
+            ->extremePaginationLinks()
+            ->groups([
+
             ])
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->searchable()
+                    ->preload()
+                    ->multiple()
+                    ->label('Status')
+                    ->options(AnalysisStatus::class),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -105,9 +93,11 @@ class RentalAnalysisResource extends Resource
             AuditsRelationManager::class,
         ];
     }
+
     public static function mutateFormDataBeforeCreate(array $data): array
     {
         $data['analyst_id'] = auth()->id();
+
         return $data;
     }
 

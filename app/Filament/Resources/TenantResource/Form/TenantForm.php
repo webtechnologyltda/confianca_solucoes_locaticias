@@ -16,48 +16,47 @@ abstract class TenantForm
     public static function getFormSchema(): array
     {
         return [
-           Section::make()
-               ->columns(4)
-               ->schema([
-                   TextInput::make('name')
-                       ->label('Nome Completo')
-                       ->required(),
+            Section::make()
+                ->columns(4)
+                ->schema([
+                    TextInput::make('name')
+                        ->label('Nome Completo')
+                        ->required(),
 
-                   Document::make('cpf')
-                       ->required()
-                       ->label('CPF')
-                       ->cpf(),
+                    Document::make('cpf')
+                        ->required()
+                        ->label('CPF')
+                        ->cpf(),
 
-                   DatePicker::make('birth_date')
-                       ->label('Data de Nascimento'),
+                    DatePicker::make('birth_date')
+                        ->label('Data de Nascimento'),
 
-                   TextInput::make('email')
-                       ->label('E-mail')
-                       ->required()
-                       ->email(),
+                    TextInput::make('email')
+                        ->label('E-mail')
+                        ->required()
+                        ->email(),
 
-                   TextInput::make('phone')
-                       ->tel()
-                       ->required()
-                       ->label('Telefone')
-                       ->mask('(99) 99999-9999')
-                       ->placeholder('(00) 00000-0000'),
+                    TextInput::make('phone')
+                        ->tel()
+                        ->required()
+                        ->label('Telefone')
+                        ->mask('(99) 99999-9999')
+                        ->placeholder('(00) 00000-0000'),
 
-                   Money::make('monthly_income')
-                       ->required()
-                       ->label('Renda Mensal'),
+                    Money::make('monthly_income')
+                        ->required()
+                        ->label('Renda Mensal'),
 
-                   TextInput::make('occupation')
-                       ->label('Profissão'),
+                    TextInput::make('occupation')
+                        ->label('Profissão'),
 
-                   Select::make('marital_status')
-                       ->options( MaritalStatus::class),
+                    Select::make('marital_status')
+                        ->options(MaritalStatus::class),
 
-                   Textarea::make('additional_notes')
-                       ->label('Observações')
-                       ->columnSpanFull(),
-               ])
-             ];
+                    Textarea::make('additional_notes')
+                        ->label('Observações')
+                        ->columnSpanFull(),
+                ]),
+        ];
     }
-
 }

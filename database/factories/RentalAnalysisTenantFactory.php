@@ -7,10 +7,10 @@ use App\Models\RentalAnalysisTenant;
 use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-
 class RentalAnalysisTenantFactory extends Factory
 {
     protected $model = RentalAnalysisTenant::class;
+
     public function definition(): array
     {
         return [
@@ -18,7 +18,4 @@ class RentalAnalysisTenantFactory extends Factory
             'tenant_id' => $this->faker->numberBetween(1, Tenant::count()),
         ];
     }
-
-
-
 }
