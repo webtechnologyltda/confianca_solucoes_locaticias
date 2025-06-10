@@ -10,6 +10,7 @@ use App\Models\Tenant;
 use Asmit\FilamentUpload\Enums\PdfViewFit;
 use Asmit\FilamentUpload\Forms\Components\AdvancedFileUpload;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
@@ -66,14 +67,17 @@ abstract class RentalAnalysisResourceForm
                 ->relationship('documents')
                 ->schema([
                     TextInput::make('name')->label('Nome do documento'),
-                    AdvancedFileUpload::make('path')
-                        ->hiddenLabel()
-                        ->panelLayout('grid')
+
+                    FileUpload::make('path')
+                        ->label('Documento')
                         ->required()
+                        ->downloadable()
+                        ->openable()
                         ->multiple()
-                        ->pdfFitType(PdfViewFit::FIT)
-                        ->pdfNavPanes(true)
-                        ->validationAttribute('documento'),
+                        ->maxSize(2048)
+                        ->uploadingMessage('Carregando...')
+                        ->previewable(true),
+
                 ]),
         ];
     }
@@ -142,16 +146,19 @@ abstract class RentalAnalysisResourceForm
                                 ->label('Valor do Aluguel')
                                 ->required()
                                 ->reactive()
+                                ->intFormat()
                                 ->prefix('R$'),
 
                             Money::make('other_tax')
                                 ->label('Outras Taxas')
                                 ->prefix('R$')
+                                ->intFormat()
                                 ->reactive(),
 
                             Money::make('tax')
                                 ->label('Taxa')
                                 ->suffix('%')
+                                ->intFormat()
                                 ->reactive()
                                 ->default(null)
                                 ->required()

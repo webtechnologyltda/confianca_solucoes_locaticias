@@ -49,6 +49,7 @@ class PropertyResource extends Resource
                     ->sortable(),
 
             ])
+            ->defaultSort('id', 'desc')
             ->filters([
                 //
             ])
