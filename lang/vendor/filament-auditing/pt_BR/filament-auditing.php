@@ -9,6 +9,7 @@ return [
     */
 
     'table.heading' => 'Auditoria',
+    'table.empty_state_heading' => 'Nenhuma Auditoria Encontrada',
 
     /*
     |--------------------------------------------------------------------------
