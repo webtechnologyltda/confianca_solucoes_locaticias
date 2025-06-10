@@ -55,6 +55,7 @@ class TenantResource extends Resource
                     ->searchable(),
 
             ])
+            ->defaultSort('id', 'desc')
             ->filters([
                 //
             ])

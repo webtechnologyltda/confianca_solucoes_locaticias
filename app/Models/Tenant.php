@@ -15,6 +15,7 @@ class Tenant extends Model implements Auditable
 
     protected $fillable = [
         'name',
+        'cpf',
         'document_id',
         'identity_document',
         'birth_date',
