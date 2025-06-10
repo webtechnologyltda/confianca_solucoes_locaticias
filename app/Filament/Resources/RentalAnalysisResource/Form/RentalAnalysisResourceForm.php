@@ -68,10 +68,14 @@ abstract class RentalAnalysisResourceForm
                 ->schema([
                     TextInput::make('name')->label('Nome do documento'),
 
-                    FileUpload::make('path')
+                    AdvancedFileUpload::make('path')
                         ->label('Documento')
                         ->required()
                         ->downloadable()
+                        ->panelLayout('grid')
+                        ->pdfDisplayPage(1)
+                        ->pdfFitType(PdfViewFit::FITH)
+                        ->pdfNavPanes(false)
                         ->openable()
                         ->multiple()
                         ->maxSize(2048)
