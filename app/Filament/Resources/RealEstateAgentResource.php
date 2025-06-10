@@ -48,6 +48,7 @@ class RealEstateAgentResource extends Resource
                     ->formatStateUsing(fn ($state) => phoneFormatAndCellPhone($state))
                     ->searchable(),
             ])
+            ->defaultSort('id', 'desc')
             ->filters([
                 //
             ])

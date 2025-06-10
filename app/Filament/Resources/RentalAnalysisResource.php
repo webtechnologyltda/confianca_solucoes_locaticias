@@ -64,7 +64,7 @@ class RentalAnalysisResource extends Resource
 
 
             ])
-            ->defaultSort('created_at', 'desc')
+            ->defaultSort('id', 'desc')
             ->extremePaginationLinks()
             ->groups([
 

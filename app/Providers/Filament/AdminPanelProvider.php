@@ -17,6 +17,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Swis\Filament\Backgrounds\FilamentBackgroundsPlugin;
+use Swis\Filament\Backgrounds\ImageProviders\MyImages;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -32,6 +34,7 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Green,
             ])
             ->brandLogo(asset('img/logo.png'))
+            ->favicon(asset('img/logo.png'))
             ->brandLogoHeight(  !str_contains(url()->current(), '/admin/login') ? '60px' : '120px')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -55,7 +58,13 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->plugins([
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(), ])
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
+                FilamentBackgroundsPlugin::make()
+                    ->imageProvider(
+                        MyImages::make()
+                            ->directory('img/backgrounds')
+                    ),
+                ])
             ->authMiddleware([
                 Authenticate::class,
             ]);
