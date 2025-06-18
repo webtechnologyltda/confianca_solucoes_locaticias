@@ -25,6 +25,7 @@ class Tenant extends Model implements Auditable
         'occupation',
         'marital_status',
         'additional_notes',
+        'status'
     ];
 
     protected $casts = [
