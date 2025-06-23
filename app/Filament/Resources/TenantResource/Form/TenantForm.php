@@ -55,6 +55,7 @@ abstract class TenantForm
 
 
                     Select::make('marital_status')
+                        ->label('Estado civil')
                         ->options(MaritalStatus::class),
 
                     Select::make('status')

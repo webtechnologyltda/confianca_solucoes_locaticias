@@ -73,7 +73,7 @@ abstract class RentalAnalysisResourceForm
             Repeater::make('documents')
                 ->relationship('documents')
                 ->schema([
-                    TextInput::make('name')->label('Nome do documento'),
+                    TextInput::make('name')->label('Nome do documento')->required(),
 
                     AdvancedFileUpload::make('path')
                         ->label('Documento')
@@ -225,15 +225,6 @@ abstract class RentalAnalysisResourceForm
                         ->required()
                         ->relationship(name: 'tenant', titleAttribute: 'name')
                         ->searchable(['name', 'cpf']),
-//                        ->afterStateUpdated(function (Set $set, $state,$livewire) {
-//                            if (! $state) {
-//                                return;
-//                            }
-//                            $tenant = Tenant::find($state);
-//                            if ($tenant && $tenant->status == TenantStatus::REJECTED->value) {
-//                                $livewire->dispatch('open-modal', id: 'confirm-tentant');
-//                            }
-//                        }),
 
 
                     Placeholder::make('cpf_tenant')
