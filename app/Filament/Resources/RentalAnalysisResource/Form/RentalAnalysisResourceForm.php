@@ -3,17 +3,21 @@
 namespace App\Filament\Resources\RentalAnalysisResource\Form;
 
 use App\Enum\AnalysisStatus;
+use App\Enum\IndiceReantalAnalysis;
 use App\Enum\PropertyType;
+use App\Enum\TenantStatus;
 use App\Models\Property;
 use App\Models\RealEstateAgent;
 use App\Models\Tenant;
 use Asmit\FilamentUpload\Enums\PdfViewFit;
 use Asmit\FilamentUpload\Forms\Components\AdvancedFileUpload;
+use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -22,7 +26,10 @@ use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Get;
+use Filament\Forms\Set;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\HtmlString;
 use Leandrocfe\FilamentPtbrFormFields\Money;
 
 abstract class RentalAnalysisResourceForm
@@ -36,7 +43,7 @@ abstract class RentalAnalysisResourceForm
                 ->schema(
                     self::getFormSchemaProperty()
                 ),
-            Step::make('Analise')
+            Step::make('Análise')
                 ->schema(
                     self::getFormSchemaAnalysis()
                 ),
@@ -66,7 +73,7 @@ abstract class RentalAnalysisResourceForm
             Repeater::make('documents')
                 ->relationship('documents')
                 ->schema([
-                    TextInput::make('name')->label('Nome do documento'),
+                    TextInput::make('name')->label('Nome do documento')->required(),
 
                     AdvancedFileUpload::make('path')
                         ->label('Documento')
@@ -118,8 +125,11 @@ abstract class RentalAnalysisResourceForm
                                 ->default(now()),
 
                             Hidden::make('analyst_id')
-                                ->label('Analista')
                                 ->default(auth()->id()),
+
+                            Placeholder::make('analyst_name')
+                                ->label('Analista')
+                                ->content(fn () => auth()->user()->name),
 
                             Select::make('real_estate_agent_id')
                                 ->columnSpan([
@@ -160,7 +170,7 @@ abstract class RentalAnalysisResourceForm
                                 ->prefix('R$'),
 
                             Money::make('other_tax')
-                                ->label('Outras Taxas')
+                                ->label('Taxas')
                                 ->prefix('R$')
                                 ->intFormat()
                                 ->reactive(),
@@ -174,9 +184,18 @@ abstract class RentalAnalysisResourceForm
                                 ->required()
                                 ->hidden(fn (Get $get) => $get('status') != AnalysisStatus::APPROVED->value),
 
-                            Placeholder::make('total_value')
-                                ->label('Total')
-                                ->content(fn (Get $get) => calculateRentalAnalysis($get('tax'), $get('other_tax'), $get('house_rental_value'))
+                            Radio::make('indice')
+                                ->label(' Índice')
+                                ->options(IndiceReantalAnalysis::class)->default(IndiceReantalAnalysis::IC->value)
+                                ->hidden(fn (Get $get) => $get('status') != AnalysisStatus::APPROVED->value),
+
+                            Placeholder::make('total_value_month')
+                                ->label('Total mês')
+                                ->content(fn (Get $get) => calculateRentalAnalysisMonth($get('tax'), $get('other_tax'), $get('house_rental_value'))
+                                ),
+                            Placeholder::make('total_value_year')
+                                ->label('Total ano')
+                                ->content(fn (Get $get) => calculateRentalAnalysisYear($get('tax'), $get('other_tax'), $get('house_rental_value'))
                                 ),
                         ]),
                 ]),
@@ -206,6 +225,7 @@ abstract class RentalAnalysisResourceForm
                         ->required()
                         ->relationship(name: 'tenant', titleAttribute: 'name')
                         ->searchable(['name', 'cpf']),
+
 
                     Placeholder::make('cpf_tenant')
                         ->label('CPF')

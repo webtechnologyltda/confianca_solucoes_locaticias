@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enum\AnalysisStatus;
+use App\Enum\IndiceReantalAnalysis;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,6 +30,7 @@ class RentalAnalysis extends Model implements Auditable
         'analysis_date',
         'analyst_id',
         'real_estate_agent_id',
+        'indice'
     ];
 
     protected $casts = [
@@ -36,6 +38,7 @@ class RentalAnalysis extends Model implements Auditable
         'analysis_document' => 'array',
         'credit_score' => 'integer',
         'status' => AnalysisStatus::class,
+        'indice'=> IndiceReantalAnalysis::class
     ];
 
     public function property(): BelongsTo
