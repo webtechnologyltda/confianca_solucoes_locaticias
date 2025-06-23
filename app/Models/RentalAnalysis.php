@@ -30,7 +30,8 @@ class RentalAnalysis extends Model implements Auditable
         'analysis_date',
         'analyst_id',
         'real_estate_agent_id',
-        'indice'
+        'indice',
+        'contract_number'
     ];
 
     protected $casts = [
