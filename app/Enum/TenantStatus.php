@@ -3,9 +3,10 @@
 namespace App\Enum;
 
 use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
 
-enum TenantStatus: int implements HasColor, HasLabel
+enum TenantStatus: int implements HasColor, HasIcon, HasLabel
 {
     case APPROVED = 1;
     case PENDING = 2;
@@ -36,7 +37,7 @@ enum TenantStatus: int implements HasColor, HasLabel
         return match ($this) {
             self::PENDING => 'heroicon-s-clock',
             self::APPROVED => 'microns-pass',
-            self::REJECTED => 'eos-cancel',
+            self::REJECTED => 'pepicon-person-circle-off',
         };
     }
 }
