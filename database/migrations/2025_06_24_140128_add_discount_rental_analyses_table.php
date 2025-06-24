@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('rental_analyses', function (Blueprint $table) {
-            $table->integer('indice')->default(1);
+            $table->integer('discount_month')->nullable();
+            $table->integer('discount_year')->nullable();
+            $table->boolean('has_manual_discount')->default(false);
         });
     }
 
@@ -21,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropColumns('rental_analyses',['indice']);
+        Schema::dropColumns('rental_analyses',['discount_month','discount_year','has_manual_discount' ]);
     }
 };
