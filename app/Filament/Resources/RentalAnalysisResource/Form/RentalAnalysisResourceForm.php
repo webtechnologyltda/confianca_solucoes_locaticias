@@ -206,7 +206,7 @@ abstract class RentalAnalysisResourceForm
                                 ->label('Aplicar desconto manual'),
 
                             Money::make('discount_month')
-                                ->label('Desconto mês')
+                                ->label('Valor com desconto mês')
                                 ->reactive()
                                 ->intFormat()
                                 ->visible(fn (Get $get) => $get('has_manual_discount') )
@@ -214,7 +214,7 @@ abstract class RentalAnalysisResourceForm
                                 ->prefix('R$'),
 
                             Money::make('discount_year')
-                                ->label('Desconto ano')
+                                ->label('Valor com desconto ano')
                                 ->required()
                                 ->reactive()
                                 ->visible(fn (Get $get) => $get('has_manual_discount'))
