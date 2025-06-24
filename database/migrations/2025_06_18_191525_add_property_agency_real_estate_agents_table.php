@@ -21,8 +21,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('real_estate_agents', function (Blueprint $table) {
-            $table->string('property_agency');
-        });
+        Schema::dropColumns('real_estate_agents',['property_agency']);
     }
 };

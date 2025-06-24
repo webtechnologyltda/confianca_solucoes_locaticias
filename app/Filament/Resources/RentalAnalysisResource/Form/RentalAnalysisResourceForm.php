@@ -22,6 +22,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Get;
 use Illuminate\Database\Eloquent\Model;
@@ -178,6 +179,7 @@ abstract class RentalAnalysisResourceForm
 
                             Money::make('tax')
                                 ->label('Taxa')
+                                ->prefix(null)
                                 ->suffix('%')
                                 ->intFormat()
                                 ->reactive()
@@ -198,6 +200,28 @@ abstract class RentalAnalysisResourceForm
                                 ->label('Total ano')
                                 ->content(fn (Get $get) => calculateRentalAnalysisYear($get('tax'), $get('other_tax'), $get('house_rental_value'))
                                 ),
+                            Toggle::make('has_manual_discount')
+                                ->columnSpan(2)
+                                ->reactive()
+                                ->label('Aplicar desconto manual'),
+
+                            Money::make('discount_month')
+                                ->label('Desconto mês')
+                                ->reactive()
+                                ->intFormat()
+                                ->visible(fn (Get $get) => $get('has_manual_discount') )
+                                ->required(fn (Get $get) => $get('has_manual_discount') )
+                                ->prefix('R$'),
+
+                            Money::make('discount_year')
+                                ->label('Desconto ano')
+                                ->required()
+                                ->reactive()
+                                ->visible(fn (Get $get) => $get('has_manual_discount'))
+                                ->required(fn (Get $get) => $get('has_manual_discount'))
+                                ->intFormat()
+                                ->prefix('R$'),
+
                         ]),
                 ]),
         ];
