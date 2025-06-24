@@ -22,16 +22,16 @@ abstract class TenantForm
                 ->schema([
                     TextInput::make('name')
                         ->columnSpan(2)
-                        ->label('Nome Completo')
+                        ->label('Nome completo')
                         ->required(),
 
                     Document::make('cpf')
                         ->required()
                         ->label('CPF')
-                        ->cpf(),
+                        ->cpf('99999999999'),
 
                     DatePicker::make('birth_date')
-                        ->label('Data de Nascimento'),
+                        ->label('Data de nascimento'),
 
                     TextInput::make('email')
                         ->label('E-mail')
@@ -51,10 +51,10 @@ abstract class TenantForm
 
                     Money::make('monthly_income')
                         ->required()
-                        ->label('Renda Mensal'),
+                        ->label('Renda mensal'),
 
                     Select::make('marital_status')
-                        ->label('Estado Civil')
+                        ->label('Estado civil')
                         ->options(MaritalStatus::class),
 
                     Select::make('status')
