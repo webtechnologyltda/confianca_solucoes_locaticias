@@ -11,7 +11,6 @@ function calculateRentalAnalysisMonth(?string $tax, ?string $other_tax, ?string 
     $totalTax = (($value_total_rental) * ($value_tax)) / 10000;
     $totalValue = ($value_total_rental + $totalTax) - $value_total_rental;
 
-
     return brazilianMoneyFormat($totalValue / 100);
 }
 
@@ -26,7 +25,5 @@ function calculateRentalAnalysisYear(?string $tax, ?string $other_tax, ?string $
     $totalTax = (($value_total_rental) * ($value_tax)) / 10000;
     $totalValue = (($value_total_rental + $totalTax) - $value_total_rental) * 12;
 
-
     return brazilianMoneyFormat($totalValue / 100);
 }
-

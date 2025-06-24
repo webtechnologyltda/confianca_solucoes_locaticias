@@ -30,7 +30,7 @@ class RentalAnalysis extends Model implements Auditable
         'analysis_date',
         'analyst_id',
         'real_estate_agent_id',
-        'indice'
+        'indice',
     ];
 
     protected $casts = [
@@ -38,7 +38,7 @@ class RentalAnalysis extends Model implements Auditable
         'analysis_document' => 'array',
         'credit_score' => 'integer',
         'status' => AnalysisStatus::class,
-        'indice'=> IndiceReantalAnalysis::class
+        'indice' => IndiceReantalAnalysis::class,
     ];
 
     public function property(): BelongsTo

@@ -53,7 +53,6 @@ abstract class TenantForm
                         ->required()
                         ->label('Renda Mensal'),
 
-
                     Select::make('marital_status')
                         ->label('Estado civil')
                         ->options(MaritalStatus::class),
@@ -66,7 +65,6 @@ abstract class TenantForm
                     Textarea::make('additional_notes')
                         ->label('Observações')
                         ->columnSpanFull(),
-
 
                 ]),
         ];

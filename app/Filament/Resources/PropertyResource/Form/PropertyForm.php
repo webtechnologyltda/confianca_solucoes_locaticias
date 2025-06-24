@@ -100,7 +100,7 @@ abstract class PropertyForm
                         ->label('Email')
                         ->email()
                         ->required(),
-                ])
+                ]),
         ];
     }
 }

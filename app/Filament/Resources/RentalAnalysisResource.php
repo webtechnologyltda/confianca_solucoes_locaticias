@@ -6,12 +6,10 @@ use App\Enum\AnalysisStatus;
 use App\Filament\Resources\RentalAnalysisResource\Form\RentalAnalysisResourceForm;
 use App\Filament\Resources\RentalAnalysisResource\Pages;
 use App\Models\RentalAnalysis;
-use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
 
@@ -48,7 +46,7 @@ class RentalAnalysisResource extends Resource
                 Tables\Columns\TextColumn::make('tenants.name')
                     ->label('Inquilino')
                     ->searchable()
-                    ->limit( 50 )
+                    ->limit(50)
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('status')
@@ -57,11 +55,9 @@ class RentalAnalysisResource extends Resource
 
                 Tables\Columns\TextColumn::make('realEstateAgent.name')
                     ->label('Corretor')
-                    ->limit( 50 )
+                    ->limit(50)
                     ->searchable()
                     ->sortable(),
-
-
 
             ])
             ->defaultSort('id', 'desc')

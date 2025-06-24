@@ -27,5 +27,4 @@ enum IndiceReantalAnalysis: int implements HasColor, HasLabel
             default => 'gray'
         };
     }
-
 }
