@@ -39,7 +39,7 @@ class RentalAnalysis extends Model implements Auditable
         'analysis_document' => 'array',
         'credit_score' => 'integer',
         'status' => AnalysisStatus::class,
-        'indice'=> IndiceReantalAnalysis::class
+        'indice' => IndiceReantalAnalysis::class,
     ];
 
     public function property(): BelongsTo

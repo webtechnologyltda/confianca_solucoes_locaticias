@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use App\Enum\TenantStatus;
 
 class Tenant extends Model implements Auditable
 {
@@ -25,12 +26,13 @@ class Tenant extends Model implements Auditable
         'occupation',
         'marital_status',
         'additional_notes',
-        'status'
+        'status',
     ];
 
     protected $casts = [
         'birth_date' => 'date',
         'monthly_income' => 'decimal:2',
+        'status' => TenantStatus::class,
     ];
 
     public function rentalAnalyses(): BelongsToMany

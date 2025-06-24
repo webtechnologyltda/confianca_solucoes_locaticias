@@ -11,9 +11,7 @@ use App\Models\RealEstateAgent;
 use App\Models\Tenant;
 use Asmit\FilamentUpload\Enums\PdfViewFit;
 use Asmit\FilamentUpload\Forms\Components\AdvancedFileUpload;
-use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
@@ -26,11 +24,9 @@ use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Get;
-use Filament\Forms\Set;
-use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\HtmlString;
 use Leandrocfe\FilamentPtbrFormFields\Money;
+use Livewire\Component as Livewire;
 
 abstract class RentalAnalysisResourceForm
 {
@@ -39,7 +35,7 @@ abstract class RentalAnalysisResourceForm
         return [
             Step::make('Participante')
                 ->schema(self::getFormSchemaTenent()),
-            Step::make('Imovel')
+            Step::make('Imóvel')
                 ->schema(
                     self::getFormSchemaProperty()
                 ),
@@ -59,10 +55,10 @@ abstract class RentalAnalysisResourceForm
     {
         return [
             Tabs::make()->tabs([
-               Tab::make('Participante')->schema( self::getFormSchemaTenent())->icon( 'fas-user'),
-               Tab::make('Imóvel')->schema( self::getFormSchemaProperty())->icon( 'fas-home'),
-               Tab::make('Análise')->schema( self::getFormSchemaAnalysis())->icon( 'fas-chart-line'),
-               Tab::make('Documentos')->schema( self::getFormSchemaDocuments())->icon('fas-file'),
+                Tab::make('Participante')->schema(self::getFormSchemaTenent())->icon('fas-user'),
+                Tab::make('Imóvel')->schema(self::getFormSchemaProperty())->icon('fas-home'),
+                Tab::make('Análise')->schema(self::getFormSchemaAnalysis())->icon('fas-chart-line'),
+                Tab::make('Documentos')->schema(self::getFormSchemaDocuments())->icon('fas-file'),
             ])->columnSpanFull(),
         ];
     }
@@ -158,7 +154,7 @@ abstract class RentalAnalysisResourceForm
                                 }),
 
                             TextInput::make('contract_number')
-                                ->label('Numero do contrato')
+                                ->label('Número do contrato')
                                 ->required()
                                 ->hidden(fn (Get $get) => $get('status') != AnalysisStatus::APPROVED->value),
 
@@ -229,8 +225,16 @@ abstract class RentalAnalysisResourceForm
                         ->getOptionLabelFromRecordUsing(fn (Model $record) => $record->name.' - '.cpfFormat($record->cpf))
                         ->required()
                         ->relationship(name: 'tenant', titleAttribute: 'name')
+                        ->afterStateUpdated(function ($state, Livewire $livewire, Select $component) {
+                            $tenant = Tenant::find($state);
+                            if ($tenant != null && $tenant->status == TenantStatus::REJECTED->value) {
+                                $livewire->mountAction('showTenantNoticeModal', [
+                                    'componentPath' => $component->getStatePath(),
+                                    'componentId' => $component->getId(),
+                                ]);
+                            }
+                        })
                         ->searchable(['name', 'cpf']),
-
 
                     Placeholder::make('cpf_tenant')
                         ->label('CPF')
@@ -284,14 +288,14 @@ abstract class RentalAnalysisResourceForm
                 ->columns(4)
                 ->schema([
                     Section::make('Imóvel')
-                        ->label('Imovel')
+                        ->label('Imóvel')
                         ->columns(4)
                         ->schema([
                             Select::make('property_id')
                                 ->relationship(name: 'property',
                                     titleAttribute: 'id',
                                     modifyQueryUsing: fn ($query) => Property::available($query))
-                                ->label('Codigo do Imóvel')
+                                ->label('Código do Imóvel')
                                 ->reactive()
                                 ->required(),
 
@@ -324,7 +328,7 @@ abstract class RentalAnalysisResourceForm
                                 }),
 
                             Placeholder::make('property_number')
-                                ->label('Numero')
+                                ->label('Número')
                                 ->content(function (callable $get) {
                                     $propertyId = $get('property_id');
 
@@ -334,7 +338,7 @@ abstract class RentalAnalysisResourceForm
 
                                     $property = \App\Models\Property::find($propertyId);
 
-                                    return $property?->number ?? 'Numero não cadastrado';
+                                    return $property?->number ?? 'Número não cadastrado';
                                 }),
 
                             Placeholder::make('property_neighborhood')
@@ -376,7 +380,7 @@ abstract class RentalAnalysisResourceForm
 
                                     $property = \App\Models\Property::find($propertyId);
 
-                                    return $property?->state ?? 'Cidade não cadastrado';
+                                    return $property?->state ?? 'Cidade não cadastrada';
                                 }),
                         ]),
 

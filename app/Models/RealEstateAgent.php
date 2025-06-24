@@ -15,7 +15,7 @@ class RealEstateAgent extends Model
         'email',
         'phone',
         'creci',
-        'property_agency'
+        'property_agency',
     ];
 
     public function rentalAnalysis()

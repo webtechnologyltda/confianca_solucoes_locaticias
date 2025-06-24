@@ -6,8 +6,8 @@ use App\Enum\AnalysisStatus;
 use App\Filament\Resources\RentalAnalysisResource;
 use App\Models\RentalAnalysis;
 use Filament\Actions;
-use Filament\Resources\Pages\ListRecords;
 use Filament\Resources\Components\Tab;
+use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 
 class ListRentalAnalyses extends ListRecords
@@ -32,12 +32,10 @@ class ListRentalAnalyses extends ListRecords
                 ->badge(RentalAnalysis::where('status', AnalysisStatus::PENDING)->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('status', AnalysisStatus::PENDING)),
 
-
             AnalysisStatus::APPROVED->getLabel() => Tab::make()
                 ->icon(AnalysisStatus::APPROVED->getIcon())
                 ->badge(RentalAnalysis::where('status', AnalysisStatus::APPROVED)->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('status', AnalysisStatus::APPROVED)),
-
 
             AnalysisStatus::REJECTED->getLabel() => Tab::make()
                 ->icon(AnalysisStatus::REJECTED->getIcon())

@@ -43,7 +43,7 @@ abstract class PropertyForm
                              */
                             setFields: [
                                 'street_address' => 'logradouro',
-                                'number' => 'numero',
+                                'number' => 'número',
                                 'complement' => 'complemento',
                                 'neighborhood' => 'bairro',
                                 'city' => 'localidade',
