@@ -80,27 +80,27 @@ abstract class PropertyForm
                         ->label('Descrição')
                         ->columnSpanFull(),
                 ]),
-            Section::make()
-                ->columns(5)
-                ->schema([
-
-                    TextInput::make('owner_name')
-                        ->label('Proprietário')
-                        ->columnSpan(2),
-
-                    TextInput::make('owner_phone')
-                        ->tel()
-                        ->required()
-                        ->label('Telefone')
-                        ->mask('(99) 99999-9999')
-                        ->placeholder('(00) 00000-0000'),
-
-                    TextInput::make('owner_email')
-                        ->columnSpan(2)
-                        ->label('Email')
-                        ->email()
-                        ->required(),
-                ]),
+//            Section::make()
+//                ->columns(5)
+//                ->schema([
+//
+//                    TextInput::make('owner_name')
+//                        ->label('Proprietário')
+//                        ->columnSpan(2),
+//
+//                    TextInput::make('owner_phone')
+//                        ->tel()
+//                        ->required()
+//                        ->label('Telefone')
+//                        ->mask('(99) 99999-9999')
+//                        ->placeholder('(00) 00000-0000'),
+//
+//                    TextInput::make('owner_email')
+//                        ->columnSpan(2)
+//                        ->label('Email')
+//                        ->email()
+//                        ->required(),
+//                ])
         ];
     }
 }

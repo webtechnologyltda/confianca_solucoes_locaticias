@@ -153,6 +153,11 @@ abstract class RentalAnalysisResourceForm
                                     return $realEstateAgent?->phone ?? 'Corretor não cadastrado';
                                 }),
 
+                            TextInput::make('contract_number')
+                                ->label('Numero do contrato')
+                                ->required()
+                                ->hidden(fn (Get $get) => $get('status') != AnalysisStatus::APPROVED->value),
+
                         ]),
                     Section::make('Financeiro')
                         ->columns(4)
