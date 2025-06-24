@@ -21,8 +21,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('rental_analyses', function (Blueprint $table) {
-            $table->string('contract_number')->nullable();
-        });
+        Schema::dropColumns('rental_analyses',['contract_number']);
     }
 };
