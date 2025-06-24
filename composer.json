@@ -18,6 +18,7 @@
         "codeat3/blade-mono-icons": "^1.5",
         "codeat3/blade-pepicons": "^1.6",
         "davidhsianturi/blade-bootstrap-icons": "^2.0",
+        "devonab/filament-easy-footer": "^2.0",
         "fakerphp/faker": "^1.23",
         "filament/filament": "3.3",
         "laravel/framework": "^12.0",

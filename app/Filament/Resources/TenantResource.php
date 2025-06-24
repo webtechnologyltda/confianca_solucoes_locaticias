@@ -54,6 +54,12 @@ class TenantResource extends Resource
                     ->formatStateUsing(fn ($state) => phoneFormatAndCellPhone($state))
                     ->searchable(),
 
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Status')
+                    ->alignCenter()
+
+
+
             ])
             ->defaultSort('id', 'desc')
             ->filters([
