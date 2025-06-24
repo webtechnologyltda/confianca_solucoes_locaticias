@@ -44,7 +44,7 @@ class RentalAnalysisResource extends Resource
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('contract_number')
-                    ->label('Numero do contrato')
+                    ->label('Número do contrato')
                     ->searchable()
                     ->sortable(),
 
