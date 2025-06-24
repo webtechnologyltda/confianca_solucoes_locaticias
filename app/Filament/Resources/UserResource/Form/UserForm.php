@@ -40,7 +40,6 @@ abstract class UserForm
                         ->label('Confirmar Senha')
                         ->password()
                         ->revealable(true)
-                        ->visible(fn ($get) => filled($get('password')))
                         ->required(fn ($get) => filled($get('password'))),
 
                     Select::make('roles')

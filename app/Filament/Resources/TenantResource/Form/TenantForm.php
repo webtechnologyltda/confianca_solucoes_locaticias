@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\TenantResource\Form;
 
 use App\Enum\MaritalStatus;
+use App\Enum\TenantStatus;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -20,6 +21,7 @@ abstract class TenantForm
                 ->columns(4)
                 ->schema([
                     TextInput::make('name')
+                        ->columnSpan(2)
                         ->label('Nome Completo')
                         ->required(),
 
@@ -33,6 +35,7 @@ abstract class TenantForm
 
                     TextInput::make('email')
                         ->label('E-mail')
+                        ->columnSpan(2)
                         ->required()
                         ->email(),
 
@@ -43,19 +46,26 @@ abstract class TenantForm
                         ->mask('(99) 99999-9999')
                         ->placeholder('(00) 00000-0000'),
 
+                    TextInput::make('occupation')
+                        ->label('Profissão'),
+
                     Money::make('monthly_income')
                         ->required()
                         ->label('Renda Mensal'),
 
-                    TextInput::make('occupation')
-                        ->label('Profissão'),
-
                     Select::make('marital_status')
+                        ->label('Estado civil')
                         ->options(MaritalStatus::class),
+
+                    Select::make('status')
+                        ->label('Status')
+                        ->default(TenantStatus::APPROVED)
+                        ->options(TenantStatus::class),
 
                     Textarea::make('additional_notes')
                         ->label('Observações')
                         ->columnSpanFull(),
+
                 ]),
         ];
     }

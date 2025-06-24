@@ -3,17 +3,19 @@
 namespace App\Filament\Resources\RentalAnalysisResource\Form;
 
 use App\Enum\AnalysisStatus;
+use App\Enum\IndiceReantalAnalysis;
 use App\Enum\PropertyType;
+use App\Enum\TenantStatus;
 use App\Models\Property;
 use App\Models\RealEstateAgent;
 use App\Models\Tenant;
 use Asmit\FilamentUpload\Enums\PdfViewFit;
 use Asmit\FilamentUpload\Forms\Components\AdvancedFileUpload;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -24,6 +26,7 @@ use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Get;
 use Illuminate\Database\Eloquent\Model;
 use Leandrocfe\FilamentPtbrFormFields\Money;
+use Livewire\Component as Livewire;
 
 abstract class RentalAnalysisResourceForm
 {
@@ -36,7 +39,7 @@ abstract class RentalAnalysisResourceForm
                 ->schema(
                     self::getFormSchemaProperty()
                 ),
-            Step::make('Analise')
+            Step::make('Análise')
                 ->schema(
                     self::getFormSchemaAnalysis()
                 ),
@@ -52,10 +55,10 @@ abstract class RentalAnalysisResourceForm
     {
         return [
             Tabs::make()->tabs([
-               Tab::make('Participante')->schema( self::getFormSchemaTenent())->icon( 'fas-user'),
-               Tab::make('Imóvel')->schema( self::getFormSchemaProperty())->icon( 'fas-home'),
-               Tab::make('Análise')->schema( self::getFormSchemaAnalysis())->icon( 'fas-chart-line'),
-               Tab::make('Documentos')->schema( self::getFormSchemaDocuments())->icon('fas-file'),
+                Tab::make('Participante')->schema(self::getFormSchemaTenent())->icon('fas-user'),
+                Tab::make('Imóvel')->schema(self::getFormSchemaProperty())->icon('fas-home'),
+                Tab::make('Análise')->schema(self::getFormSchemaAnalysis())->icon('fas-chart-line'),
+                Tab::make('Documentos')->schema(self::getFormSchemaDocuments())->icon('fas-file'),
             ])->columnSpanFull(),
         ];
     }
@@ -66,7 +69,7 @@ abstract class RentalAnalysisResourceForm
             Repeater::make('documents')
                 ->relationship('documents')
                 ->schema([
-                    TextInput::make('name')->label('Nome do documento'),
+                    TextInput::make('name')->label('Nome do documento')->required(),
 
                     AdvancedFileUpload::make('path')
                         ->label('Documento')
@@ -118,8 +121,11 @@ abstract class RentalAnalysisResourceForm
                                 ->default(now()),
 
                             Hidden::make('analyst_id')
-                                ->label('Analista')
                                 ->default(auth()->id()),
+
+                            Placeholder::make('analyst_name')
+                                ->label('Analista')
+                                ->content(fn () => auth()->user()->name),
 
                             Select::make('real_estate_agent_id')
                                 ->columnSpan([
@@ -147,6 +153,11 @@ abstract class RentalAnalysisResourceForm
                                     return $realEstateAgent?->phone ?? 'Corretor não cadastrado';
                                 }),
 
+                            TextInput::make('contract_number')
+                                ->label('Numero do contrato')
+                                ->required()
+                                ->hidden(fn (Get $get) => $get('status') != AnalysisStatus::APPROVED->value),
+
                         ]),
                     Section::make('Financeiro')
                         ->columns(4)
@@ -160,7 +171,7 @@ abstract class RentalAnalysisResourceForm
                                 ->prefix('R$'),
 
                             Money::make('other_tax')
-                                ->label('Outras Taxas')
+                                ->label('Taxas')
                                 ->prefix('R$')
                                 ->intFormat()
                                 ->reactive(),
@@ -174,9 +185,18 @@ abstract class RentalAnalysisResourceForm
                                 ->required()
                                 ->hidden(fn (Get $get) => $get('status') != AnalysisStatus::APPROVED->value),
 
-                            Placeholder::make('total_value')
-                                ->label('Total')
-                                ->content(fn (Get $get) => calculateRentalAnalysis($get('tax'), $get('other_tax'), $get('house_rental_value'))
+                            Radio::make('indice')
+                                ->label(' Índice')
+                                ->options(IndiceReantalAnalysis::class)->default(IndiceReantalAnalysis::IC->value)
+                                ->hidden(fn (Get $get) => $get('status') != AnalysisStatus::APPROVED->value),
+
+                            Placeholder::make('total_value_month')
+                                ->label('Total mês')
+                                ->content(fn (Get $get) => calculateRentalAnalysisMonth($get('tax'), $get('other_tax'), $get('house_rental_value'))
+                                ),
+                            Placeholder::make('total_value_year')
+                                ->label('Total ano')
+                                ->content(fn (Get $get) => calculateRentalAnalysisYear($get('tax'), $get('other_tax'), $get('house_rental_value'))
                                 ),
                         ]),
                 ]),
@@ -205,6 +225,15 @@ abstract class RentalAnalysisResourceForm
                         ->getOptionLabelFromRecordUsing(fn (Model $record) => $record->name.' - '.cpfFormat($record->cpf))
                         ->required()
                         ->relationship(name: 'tenant', titleAttribute: 'name')
+                        ->afterStateUpdated(function ($state, Livewire $livewire, Select $component) {
+                            $tenant = Tenant::find($state);
+                            if ($tenant != null && $tenant->status == TenantStatus::REJECTED->value) {
+                                $livewire->mountAction('showTenantNoticeModal', [
+                                    'componentPath' => $component->getStatePath(),
+                                    'componentId' => $component->getId(),
+                                ]);
+                            }
+                        })
                         ->searchable(['name', 'cpf']),
 
                     Placeholder::make('cpf_tenant')

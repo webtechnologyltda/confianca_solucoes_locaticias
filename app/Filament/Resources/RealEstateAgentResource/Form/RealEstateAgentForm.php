@@ -18,8 +18,14 @@ abstract class RealEstateAgentForm
                         ->label('Nome Completo')
                         ->required(),
 
+                    TextInput::make('property_agency')
+                        ->columnSpan(2)
+                        ->label('Imobiliária ')
+                        ->required(),
+
                     TextInput::make('email')
                         ->label('E-mail')
+                        ->unique()
                         ->columnSpan(2)
                         ->email()
                         ->maxLength(255),
@@ -30,8 +36,6 @@ abstract class RealEstateAgentForm
                         ->mask('(99) 99999-9999')
                         ->placeholder('(00) 00000-0000'),
 
-                    TextInput::make('creci')
-                        ->label('CRECI'),
                 ]),
 
         ];

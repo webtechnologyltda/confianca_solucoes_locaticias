@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Enum;
+
+use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasIcon;
+use Filament\Support\Contracts\HasLabel;
+
+enum TenantStatus: int implements HasColor, HasIcon, HasLabel
+{
+    case APPROVED = 1;
+    case PENDING = 2;
+    case REJECTED = 3;
+
+    public function getLabel(): string
+    {
+        return match ($this) {
+            self::APPROVED => 'Aprovado',
+            self::PENDING => 'Em análise',
+            self::REJECTED => 'Reprovado',
+            default => 'Não Informado'
+        };
+    }
+
+    public function getColor(): string
+    {
+        return match ($this) {
+            self::PENDING => 'warning',
+            self::APPROVED => 'success',
+            self::REJECTED => 'danger',
+            default => 'gray'
+        };
+    }
+
+    public function getIcon(): ?string
+    {
+        return match ($this) {
+            self::PENDING => 'heroicon-s-clock',
+            self::APPROVED => 'microns-pass',
+            self::REJECTED => 'pepicon-person-circle-off',
+        };
+    }
+}
