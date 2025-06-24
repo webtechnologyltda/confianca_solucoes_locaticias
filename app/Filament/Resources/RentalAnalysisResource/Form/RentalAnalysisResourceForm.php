@@ -35,7 +35,7 @@ abstract class RentalAnalysisResourceForm
         return [
             Step::make('Participante')
                 ->schema(self::getFormSchemaTenent()),
-            Step::make('Imovel')
+            Step::make('Imóvel')
                 ->schema(
                     self::getFormSchemaProperty()
                 ),
@@ -154,7 +154,7 @@ abstract class RentalAnalysisResourceForm
                                 }),
 
                             TextInput::make('contract_number')
-                                ->label('Numero do contrato')
+                                ->label('Número do contrato')
                                 ->required()
                                 ->hidden(fn (Get $get) => $get('status') != AnalysisStatus::APPROVED->value),
 
@@ -288,14 +288,14 @@ abstract class RentalAnalysisResourceForm
                 ->columns(4)
                 ->schema([
                     Section::make('Imóvel')
-                        ->label('Imovel')
+                        ->label('Imóvel')
                         ->columns(4)
                         ->schema([
                             Select::make('property_id')
                                 ->relationship(name: 'property',
                                     titleAttribute: 'id',
                                     modifyQueryUsing: fn ($query) => Property::available($query))
-                                ->label('Codigo do Imóvel')
+                                ->label('Código do Imóvel')
                                 ->reactive()
                                 ->required(),
 
@@ -328,7 +328,7 @@ abstract class RentalAnalysisResourceForm
                                 }),
 
                             Placeholder::make('property_number')
-                                ->label('Numero')
+                                ->label('Número')
                                 ->content(function (callable $get) {
                                     $propertyId = $get('property_id');
 
@@ -338,7 +338,7 @@ abstract class RentalAnalysisResourceForm
 
                                     $property = \App\Models\Property::find($propertyId);
 
-                                    return $property?->number ?? 'Numero não cadastrado';
+                                    return $property?->number ?? 'Número não cadastrado';
                                 }),
 
                             Placeholder::make('property_neighborhood')
@@ -380,16 +380,16 @@ abstract class RentalAnalysisResourceForm
 
                                     $property = \App\Models\Property::find($propertyId);
 
-                                    return $property?->state ?? 'Cidade não cadastrado';
+                                    return $property?->state ?? 'Cidade não cadastrada';
                                 }),
                         ]),
 
-                    Section::make('Proprietario')
-                        ->label('Proprietario')
+                    Section::make('Proprietário')
+                        ->label('Proprietário')
                         ->columns(3)
                         ->schema([
                             Placeholder::make('property_owner_name')
-                                ->label('Proprietario')
+                                ->label('Proprietário')
                                 ->content(function (callable $get) {
                                     $propertyId = $get('property_id');
 
@@ -399,11 +399,11 @@ abstract class RentalAnalysisResourceForm
 
                                     $property = \App\Models\Property::find($propertyId);
 
-                                    return $property?->owner_name ?? 'Proprietario não cadastrado';
+                                    return $property?->owner_name ?? 'Proprietário não cadastrado';
                                 }),
 
                             Placeholder::make('property_owner_phone')
-                                ->label('E-mail Proprietario')
+                                ->label('E-mail Proprietário')
                                 ->content(function (callable $get) {
                                     $propertyId = $get('property_id');
 
@@ -413,11 +413,11 @@ abstract class RentalAnalysisResourceForm
 
                                     $property = \App\Models\Property::find($propertyId);
 
-                                    return $property?->owner_phone ?? 'Proprietario não cadastrado';
+                                    return $property?->owner_phone ?? 'Proprietário não cadastrado';
                                 }),
 
                             Placeholder::make('property_owner_email')
-                                ->label('Telefone Proprietario')
+                                ->label('Telefone Proprietário')
                                 ->content(function (callable $get) {
                                     $propertyId = $get('property_id');
 
@@ -427,7 +427,7 @@ abstract class RentalAnalysisResourceForm
 
                                     $property = \App\Models\Property::find($propertyId);
 
-                                    return $property?->owner_email ?? 'Proprietario não cadastrado';
+                                    return $property?->owner_email ?? 'Proprietário não cadastrado';
                                 }),
 
                         ]),

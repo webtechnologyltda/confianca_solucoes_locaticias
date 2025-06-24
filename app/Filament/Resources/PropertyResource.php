@@ -36,7 +36,7 @@ class PropertyResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
-                    ->label('Codigo do imovel')
+                    ->label('Código do imóvel')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('street_address')
                     ->label('Endereço')

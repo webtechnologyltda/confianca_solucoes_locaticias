@@ -54,7 +54,7 @@ abstract class TenantForm
                         ->label('Renda Mensal'),
 
                     Select::make('marital_status')
-                        ->label('Estado civil')
+                        ->label('Estado Civil')
                         ->options(MaritalStatus::class),
 
                     Select::make('status')
