@@ -28,6 +28,8 @@ abstract class TenantForm
                     Document::make('cpf')
                         ->required()
                         ->label('CPF')
+                        ->unique()
+                        ->validationAttribute('CPF')
                         ->cpf('99999999999'),
 
                     DatePicker::make('birth_date')
