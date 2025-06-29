@@ -21,6 +21,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropColumns('real_estate_agents',['property_agency']);
+        Schema::dropColumns('real_estate_agents', ['property_agency']);
     }
 };

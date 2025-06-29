@@ -48,7 +48,6 @@ class RentalAnalysisResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-
                 Tables\Columns\TextColumn::make('tenants.name')
                     ->label('Inquilino')
                     ->searchable()
@@ -61,7 +60,7 @@ class RentalAnalysisResource extends Resource
 
                 Tables\Columns\TextColumn::make('realEstateAgent.property_agency')
                     ->label('Imobiliária')
-                    ->limit( 50 )
+                    ->limit(50)
                     ->searchable()
                     ->sortable(),
 

@@ -56,9 +56,7 @@ class TenantResource extends Resource
 
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
-                    ->alignCenter()
-
-
+                    ->alignCenter(),
 
             ])
             ->defaultSort('id', 'desc')

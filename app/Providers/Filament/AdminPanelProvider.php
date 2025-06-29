@@ -18,7 +18,6 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
-use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Swis\Filament\Backgrounds\FilamentBackgroundsPlugin;
 use Swis\Filament\Backgrounds\ImageProviders\MyImages;
@@ -47,7 +46,7 @@ class AdminPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class
+                Widgets\AccountWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -72,10 +71,10 @@ class AdminPanelProvider extends PanelProvider
                             ->directory('img/backgrounds')
                     ),
                 EasyFooterPlugin::make()
-                ->withFooterPosition('footer')
-                ->withLogo(asset('img/logo.png'))
-                ->withLoadTime('Tempo de carregamento: ')
-                ->withBorder(false),
+                    ->withFooterPosition('footer')
+                    ->withLogo(asset('img/logo.png'))
+                    ->withLoadTime('Tempo de carregamento: ')
+                    ->withBorder(false),
             ])
             ->authMiddleware([
                 Authenticate::class,

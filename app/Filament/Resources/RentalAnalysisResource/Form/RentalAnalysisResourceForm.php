@@ -209,8 +209,8 @@ abstract class RentalAnalysisResourceForm
                                 ->label('Valor com desconto mês')
                                 ->reactive()
                                 ->intFormat()
-                                ->visible(fn (Get $get) => $get('has_manual_discount') )
-                                ->required(fn (Get $get) => $get('has_manual_discount') )
+                                ->visible(fn (Get $get) => $get('has_manual_discount'))
+                                ->required(fn (Get $get) => $get('has_manual_discount'))
                                 ->prefix('R$'),
 
                             Money::make('discount_year')
@@ -408,53 +408,53 @@ abstract class RentalAnalysisResourceForm
                                 }),
                         ]),
 
-//                    Section::make('Proprietario')
-//                        ->label('Proprietario')
-//                        ->columns(3)
-//                        ->schema([
-//                            Placeholder::make('property_owner_name')
-//                                ->label('Proprietario')
-//                                ->content(function (callable $get) {
-//                                    $propertyId = $get('property_id');
-//
-//                                    if (! $propertyId) {
-//                                        return 'Selecione um imóvel';
-//                                    }
-//
-//                                    $property = \App\Models\Property::find($propertyId);
-//
-//                                    return $property?->owner_name ?? 'Proprietario não cadastrado';
-//                                }),
-//
-//                            Placeholder::make('property_owner_phone')
-//                                ->label('E-mail Proprietario')
-//                                ->content(function (callable $get) {
-//                                    $propertyId = $get('property_id');
-//
-//                                    if (! $propertyId) {
-//                                        return 'Selecione um imóvel';
-//                                    }
-//
-//                                    $property = \App\Models\Property::find($propertyId);
-//
-//                                    return $property?->owner_phone ?? 'Proprietario não cadastrado';
-//                                }),
-//
-//                            Placeholder::make('property_owner_email')
-//                                ->label('Telefone Proprietario')
-//                                ->content(function (callable $get) {
-//                                    $propertyId = $get('property_id');
-//
-//                                    if (! $propertyId) {
-//                                        return 'Selecione um imóvel';
-//                                    }
-//
-//                                    $property = \App\Models\Property::find($propertyId);
-//
-//                                    return $property?->owner_email ?? 'Proprietario não cadastrado';
-//                                }),
-//
-//                        ]),
+                    //                    Section::make('Proprietario')
+                    //                        ->label('Proprietario')
+                    //                        ->columns(3)
+                    //                        ->schema([
+                    //                            Placeholder::make('property_owner_name')
+                    //                                ->label('Proprietario')
+                    //                                ->content(function (callable $get) {
+                    //                                    $propertyId = $get('property_id');
+                    //
+                    //                                    if (! $propertyId) {
+                    //                                        return 'Selecione um imóvel';
+                    //                                    }
+                    //
+                    //                                    $property = \App\Models\Property::find($propertyId);
+                    //
+                    //                                    return $property?->owner_name ?? 'Proprietario não cadastrado';
+                    //                                }),
+                    //
+                    //                            Placeholder::make('property_owner_phone')
+                    //                                ->label('E-mail Proprietario')
+                    //                                ->content(function (callable $get) {
+                    //                                    $propertyId = $get('property_id');
+                    //
+                    //                                    if (! $propertyId) {
+                    //                                        return 'Selecione um imóvel';
+                    //                                    }
+                    //
+                    //                                    $property = \App\Models\Property::find($propertyId);
+                    //
+                    //                                    return $property?->owner_phone ?? 'Proprietario não cadastrado';
+                    //                                }),
+                    //
+                    //                            Placeholder::make('property_owner_email')
+                    //                                ->label('Telefone Proprietario')
+                    //                                ->content(function (callable $get) {
+                    //                                    $propertyId = $get('property_id');
+                    //
+                    //                                    if (! $propertyId) {
+                    //                                        return 'Selecione um imóvel';
+                    //                                    }
+                    //
+                    //                                    $property = \App\Models\Property::find($propertyId);
+                    //
+                    //                                    return $property?->owner_email ?? 'Proprietario não cadastrado';
+                    //                                }),
+                    //
+                    //                        ]),
                 ]),
 
         ];
