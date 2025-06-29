@@ -21,6 +21,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropColumns('rental_analyses',['indice']);
+        Schema::dropColumns('rental_analyses', ['indice']);
     }
 };

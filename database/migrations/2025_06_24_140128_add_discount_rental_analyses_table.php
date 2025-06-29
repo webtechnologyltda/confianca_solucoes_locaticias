@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropColumns('rental_analyses',['discount_month','discount_year','has_manual_discount' ]);
+        Schema::dropColumns('rental_analyses', ['discount_month', 'discount_year', 'has_manual_discount']);
     }
 };
