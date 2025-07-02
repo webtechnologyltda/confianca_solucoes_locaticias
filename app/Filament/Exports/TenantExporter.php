@@ -86,10 +86,10 @@ class TenantExporter extends Exporter
 
     public static function getCompletedNotificationBody(Export $export): string
     {
-        $body = 'A exportação do seu inquilino foi concluída e ' . number_format($export->successful_rows) . ' ' . str('linha foi exportada.')->plural($export->successful_rows);
+        $body = 'A exportação de inquilinos foi concluída e ' . number_format($export->successful_rows) . ' ' . ($export->successful_rows > 1 ? 'linhas foram exportadas.' : 'linha foi exportada.');
 
         if ($failedRowsCount = $export->getFailedRowsCount()) {
-            $body .= ' ' . number_format($failedRowsCount) . ' ' . str('linha falhou ao exportar.')->plural($failedRowsCount);
+            $body .= ' ' . number_format($failedRowsCount) . ' ' . ($failedRowsCount > 1 ? 'linhas falharam ao exportar.' : 'linha falhou ao exportar.');
         }
 
         return $body;

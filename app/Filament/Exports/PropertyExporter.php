@@ -20,8 +20,7 @@ class PropertyExporter extends Exporter
         return [
 
             ExportColumn::make('id')
-                ->label('')
-                ->label('ID'),
+                ->label('Código'),
 
             ExportColumn::make('street_address')
                 ->label('Logradouro'),
@@ -29,37 +28,37 @@ class PropertyExporter extends Exporter
             ExportColumn::make('number')
                 ->label('Número'),
 
-                ExportColumn::make('complement')
+            ExportColumn::make('complement')
                 ->label('Complemento'),
 
-                ExportColumn::make('city')
+            ExportColumn::make('city')
                 ->label('Cidade'),
 
-                ExportColumn::make('neighborhood')
+            ExportColumn::make('neighborhood')
                 ->label('Bairro'),
 
-                ExportColumn::make('state')
+            ExportColumn::make('state')
                 ->label('UF'),
 
-                ExportColumn::make('zip_code')
+            ExportColumn::make('zip_code')
                 ->label('CEP'),
 
-                ExportColumn::make('status')
+            ExportColumn::make('status')
                 ->label('Status'),
 
-                ExportColumn::make('description')
+            ExportColumn::make('description')
                 ->label('Descrição'),
 
-                ExportColumn::make('type')
+            ExportColumn::make('type')
                 ->label('Tipo'),
 
-                ExportColumn::make('created_at')
-                    ->label('Criado em')
-                    ->formatStateUsing(fn ($state) => $state?->format('d/m/Y H:i:s')),
+            ExportColumn::make('created_at')
+                ->label('Criado em')
+                ->formatStateUsing(fn ($state) => $state?->format('d/m/Y H:i:s')),
 
-                ExportColumn::make('updated_at')
-                    ->label('Atualizado em')
-                    ->formatStateUsing(fn ($state) => $state?->format('d/m/Y H:i:s'))
+            ExportColumn::make('updated_at')
+                ->label('Atualizado em')
+                ->formatStateUsing(fn ($state) => $state?->format('d/m/Y H:i:s'))
         ];
     }
 
@@ -78,10 +77,10 @@ class PropertyExporter extends Exporter
 
     public static function getCompletedNotificationBody(Export $export): string
     {
-        $body = 'Your property export has completed and ' . number_format($export->successful_rows) . ' ' . str('row')->plural($export->successful_rows) . ' exported.';
+        $body = 'A exportação de imóveis foi concluída e ' . number_format($export->successful_rows) . ' ' . ($export->successful_rows > 1 ? 'linhas foram exportadas.' : 'linha foi exportada.');
 
         if ($failedRowsCount = $export->getFailedRowsCount()) {
-            $body .= ' ' . number_format($failedRowsCount) . ' ' . str('row')->plural($failedRowsCount) . ' failed to export.';
+            $body .= ' ' . number_format($failedRowsCount) . ' ' . ($failedRowsCount > 1 ? 'linhas falharam ao exportar.' : 'linha falhou ao exportar.');
         }
 
         return $body;
