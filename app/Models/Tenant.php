@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\MaritalStatus;
 use App\Enum\TenantStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -33,6 +34,7 @@ class Tenant extends Model implements Auditable
         'birth_date' => 'date',
         'monthly_income' => 'decimal:2',
         'status' => TenantStatus::class,
+        'marital_status' => MaritalStatus::class,
     ];
 
     public function rentalAnalyses(): BelongsToMany

@@ -2,12 +2,14 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Exports\TenantExporter;
 use App\Filament\Resources\TenantResource\Form\TenantForm;
 use App\Filament\Resources\TenantResource\Pages;
 use App\Models\Tenant;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Table;
 use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
 
@@ -67,7 +69,8 @@ class TenantResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-
+                ExportBulkAction::make()
+                ->exporter(TenantExporter::class)
             ]);
     }
 
