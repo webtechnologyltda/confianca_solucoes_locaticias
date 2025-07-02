@@ -159,6 +159,15 @@ abstract class RentalAnalysisResourceForm
                                 ->required()
                                 ->hidden(fn (Get $get) => $get('status') != AnalysisStatus::APPROVED->value),
 
+                            DatePicker::make('contract_signature_date')
+                                ->label('Data assinatura do contrato')
+                                ->hidden(fn (Get $get) => $get('status') != AnalysisStatus::APPROVED->value),
+
+                            DatePicker::make('contract_renewal_date')
+                                ->label('Data da renovação do contrato')
+                                ->hidden(fn (Get $get) => $get('status') != AnalysisStatus::APPROVED->value),
+
+
                         ]),
                     Section::make('Financeiro')
                         ->columns(4)

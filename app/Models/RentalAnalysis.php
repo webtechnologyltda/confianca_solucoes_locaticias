@@ -35,6 +35,8 @@ class RentalAnalysis extends Model implements Auditable
         'discount_month',
         'discount_year',
         'has_manual_discount',
+        'contract_signature_date',
+        'contract_renewal_date'
     ];
 
     protected $casts = [
