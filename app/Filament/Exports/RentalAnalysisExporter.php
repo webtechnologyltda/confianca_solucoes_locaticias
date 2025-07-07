@@ -29,6 +29,7 @@ class RentalAnalysisExporter extends Exporter
                 ->label('Código do Imóvel'),
 
             ExportColumn::make('property.type')
+                ->formatStateUsing(fn ($state) => $state->getLabel())
                 ->label('Tipo do Imóvel'),
 
             ExportColumn::make('status')
@@ -73,13 +74,21 @@ class RentalAnalysisExporter extends Exporter
                 ->enabledByDefault(false)
                 ->label('Desconto Anual'),
 
+            ExportColumn::make('contract_signature_date')
+                ->label('Assinado em')
+                ->formatStateUsing(fn ($state) => $state?->format('d/m/Y H:i:s')),
+
+            ExportColumn::make('contract_renewal_date')
+                ->label('Renovação do Contrato em')
+                ->formatStateUsing(fn ($state) => $state?->format('d/m/Y H:i:s')),
+
             ExportColumn::make('created_at')
                 ->label('Criado em')
                 ->formatStateUsing(fn ($state) => $state?->format('d/m/Y H:i:s')),
 
             ExportColumn::make('updated_at')
                 ->label('Atualizado em')
-                ->formatStateUsing(fn ($state) => $state?->format('d/m/Y H:i:s'))
+                ->formatStateUsing(fn ($state) => $state?->format('d/m/Y H:i:s')),
         ];
     }
 
