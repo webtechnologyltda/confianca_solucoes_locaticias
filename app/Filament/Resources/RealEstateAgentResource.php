@@ -2,12 +2,14 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Exports\RealEstateAgentExporter;
 use App\Filament\Resources\RealEstateAgentResource\Form\RealEstateAgentForm;
 use App\Filament\Resources\RealEstateAgentResource\Pages;
 use App\Models\RealEstateAgent;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Table;
 
 class RealEstateAgentResource extends Resource
@@ -55,7 +57,9 @@ class RealEstateAgentResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-
+                ExportBulkAction::make()
+                    ->icon('entypo-export')
+                    ->exporter(RealEstateAgentExporter::class)
             ]);
     }
 
