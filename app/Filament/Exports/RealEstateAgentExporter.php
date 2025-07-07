@@ -19,15 +19,29 @@ class RealEstateAgentExporter extends Exporter
     {
         return [
             ExportColumn::make('id')
-                ->label('ID'),
-            ExportColumn::make('name'),
-            ExportColumn::make('email'),
-            ExportColumn::make('phone'),
-            ExportColumn::make('creci'),
-            ExportColumn::make('created_at'),
-            ExportColumn::make('updated_at'),
-            ExportColumn::make('property_agency'),
-            ExportColumn::make('deleted_at'),
+                ->label('Código'),
+
+            ExportColumn::make('name')
+                ->label('Nome'),
+
+            ExportColumn::make('email')
+                ->enabledByDefault(false)
+                ->label('E-mail'),
+
+            ExportColumn::make('phone')
+                ->enabledByDefault(false)
+                ->label('Telefone'),
+
+            ExportColumn::make('creci')
+                ->label('CRECI'),
+
+            ExportColumn::make('created_at')
+                ->label('Criado em')
+                ->formatStateUsing(fn ($state) => $state?->format('d/m/Y H:i:s')),
+
+            ExportColumn::make('updated_at')
+                ->label('Atualizado em')
+                ->formatStateUsing(fn ($state) => $state?->format('d/m/Y H:i:s'))
         ];
     }
 

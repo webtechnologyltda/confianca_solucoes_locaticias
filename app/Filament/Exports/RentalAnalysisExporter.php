@@ -19,25 +19,65 @@ class RentalAnalysisExporter extends Exporter
     {
         return [
             ExportColumn::make('id')
-                ->label('ID'),
-            ExportColumn::make('property.id'),
-            ExportColumn::make('status'),
-            ExportColumn::make('credit_score'),
-            ExportColumn::make('tax'),
-            ExportColumn::make('other_tax'),
-            ExportColumn::make('house_rental_value'),
-            ExportColumn::make('observations'),
-            ExportColumn::make('analysis_date'),
-            ExportColumn::make('analyst.name'),
-            ExportColumn::make('realEstateAgent.name'),
-            ExportColumn::make('created_at'),
-            ExportColumn::make('updated_at'),
-            ExportColumn::make('deleted_at'),
-            ExportColumn::make('indice'),
-            ExportColumn::make('contract_number'),
-            ExportColumn::make('discount_month'),
-            ExportColumn::make('discount_year'),
-            ExportColumn::make('has_manual_discount'),
+                ->label('Código'),
+
+            ExportColumn::make('contract_number')
+                ->enabledByDefault(false)
+                ->label('Número do Contrato'),
+
+            ExportColumn::make('property.id')
+                ->label('Código do Imóvel'),
+
+            ExportColumn::make('property.type')
+                ->label('Tipo do Imóvel'),
+
+            ExportColumn::make('status')
+                ->label('Status'),
+
+            ExportColumn::make('credit_score')
+                ->enabledByDefault(false)
+                ->label('Score de Crédito'),
+
+            ExportColumn::make('tax')
+                ->label('Taxa'),
+
+            ExportColumn::make('other_tax')
+                ->label('Outras Taxas'),
+
+            ExportColumn::make('house_rental_value')
+                ->label('Valor do Aluguel'),
+
+            ExportColumn::make('observations')
+                ->label('Observações'),
+
+            ExportColumn::make('analysis_date')
+                ->label('Data da Análise')
+                ->formatStateUsing(fn ($state) => $state?->format('d/m/Y H:i:s')),
+
+            ExportColumn::make('analyst.name')
+                ->label('Analista'),
+
+            ExportColumn::make('realEstateAgent.name')
+                ->label('Corretor'),
+
+            ExportColumn::make('indice')
+                ->label('Índice'),
+
+            ExportColumn::make('discount_month')
+                ->enabledByDefault(false)
+                ->label('Desconto Mensal'),
+
+            ExportColumn::make('discount_year')
+                ->enabledByDefault(false)
+                ->label('Desconto Anual'),
+
+            ExportColumn::make('created_at')
+                ->label('Criado em')
+                ->formatStateUsing(fn ($state) => $state?->format('d/m/Y H:i:s')),
+
+            ExportColumn::make('updated_at')
+                ->label('Atualizado em')
+                ->formatStateUsing(fn ($state) => $state?->format('d/m/Y H:i:s'))
         ];
     }
 

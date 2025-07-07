@@ -22,35 +22,42 @@ class PropertyExporter extends Exporter
             ExportColumn::make('id')
                 ->label('Código'),
 
+            ExportColumn::make('description')
+                ->label('Descrição'),
+
+            ExportColumn::make('type')
+                ->label('Tipo'),
+
+            ExportColumn::make('zip_code')
+                ->enabledByDefault(false)
+                ->label('CEP'),
+
             ExportColumn::make('street_address')
+                ->enabledByDefault(false)
                 ->label('Logradouro'),
 
             ExportColumn::make('number')
+                ->enabledByDefault(false)
                 ->label('Número'),
 
             ExportColumn::make('complement')
+                ->enabledByDefault(false)
                 ->label('Complemento'),
 
             ExportColumn::make('city')
                 ->label('Cidade'),
 
             ExportColumn::make('neighborhood')
+                ->enabledByDefault(false)
                 ->label('Bairro'),
 
             ExportColumn::make('state')
+                ->enabledByDefault(false)
                 ->label('UF'),
 
-            ExportColumn::make('zip_code')
-                ->label('CEP'),
-
             ExportColumn::make('status')
+                ->formatStateUsing(fn ($state) => $state->getLabel())
                 ->label('Status'),
-
-            ExportColumn::make('description')
-                ->label('Descrição'),
-
-            ExportColumn::make('type')
-                ->label('Tipo'),
 
             ExportColumn::make('created_at')
                 ->label('Criado em')

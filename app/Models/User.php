@@ -70,4 +70,9 @@ class User extends Authenticatable implements Auditable, FilamentUser, MustVerif
         // return str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
         return true; // Allow all users to access the panel for testing purposes
     }
+
+    public function isSuperAdmin()
+    {
+        return $this->roles->contains('id', 1);
+    }
 }
