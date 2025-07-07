@@ -32,6 +32,7 @@ class RentalAnalysisExporter extends Exporter
                 ->label('Tipo do Imóvel'),
 
             ExportColumn::make('status')
+                ->formatStateUsing(fn ($state) => $state->getLabel())
                 ->label('Status'),
 
             ExportColumn::make('credit_score')
@@ -61,6 +62,7 @@ class RentalAnalysisExporter extends Exporter
                 ->label('Corretor'),
 
             ExportColumn::make('indice')
+                ->formatStateUsing(fn ($state) => $state->getLabel())
                 ->label('Índice'),
 
             ExportColumn::make('discount_month')
