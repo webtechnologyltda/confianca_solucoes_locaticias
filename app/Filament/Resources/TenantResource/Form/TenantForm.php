@@ -28,7 +28,7 @@ abstract class TenantForm
                     Document::make('cpf')
                         ->required()
                         ->label('CPF')
-                        ->unique()
+                        ->unique(ignoreRecord: true)
                         ->validationAttribute('CPF')
                         ->cpf('99999999999'),
 
