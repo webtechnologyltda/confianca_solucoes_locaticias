@@ -3,12 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Enum\AnalysisStatus;
+use App\Filament\Exports\RentalAnalysisExporter;
 use App\Filament\Resources\RentalAnalysisResource\Form\RentalAnalysisResourceForm;
 use App\Filament\Resources\RentalAnalysisResource\Pages;
 use App\Models\RentalAnalysis;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
@@ -85,6 +87,10 @@ class RentalAnalysisResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+
+                ExportBulkAction::make()
+                    ->icon('entypo-export')
+                    ->exporter(RentalAnalysisExporter::class)
             ]);
     }
 

@@ -23,10 +23,7 @@ class Property extends Model implements Auditable
         'zip_code',
         'status',
         'description',
-        'type',
-        'owner_name',
-        'owner_phone',
-        'owner_email',
+        'type'
     ];
 
     protected $casts = [

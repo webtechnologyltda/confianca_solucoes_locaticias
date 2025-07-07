@@ -2,12 +2,14 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Exports\PropertyExporter;
 use App\Filament\Resources\PropertyResource\Form\PropertyForm;
 use App\Filament\Resources\PropertyResource\Pages;
 use App\Models\Property;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Table;
 use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
 
@@ -57,7 +59,9 @@ class PropertyResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-
+                ExportBulkAction::make()
+                    ->icon('entypo-export')
+                    ->exporter(PropertyExporter::class)
             ]);
     }
 
