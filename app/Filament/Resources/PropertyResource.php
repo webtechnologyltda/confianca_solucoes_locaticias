@@ -60,7 +60,8 @@ class PropertyResource extends Resource
             ])
             ->bulkActions([
                 ExportBulkAction::make()
-                ->exporter(PropertyExporter::class)
+                    ->icon('entypo-export')
+                    ->exporter(PropertyExporter::class)
             ]);
     }
 

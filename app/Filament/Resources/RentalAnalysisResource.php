@@ -89,7 +89,8 @@ class RentalAnalysisResource extends Resource
                 ]),
 
                 ExportBulkAction::make()
-                ->exporter(RentalAnalysisExporter::class)
+                    ->icon('entypo-export')
+                    ->exporter(RentalAnalysisExporter::class)
             ]);
     }
 

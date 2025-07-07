@@ -58,7 +58,8 @@ class RealEstateAgentResource extends Resource
             ])
             ->bulkActions([
                 ExportBulkAction::make()
-                ->exporter(RealEstateAgentExporter::class)
+                    ->icon('entypo-export')
+                    ->exporter(RealEstateAgentExporter::class)
             ]);
     }
 

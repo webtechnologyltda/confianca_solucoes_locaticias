@@ -70,7 +70,8 @@ class TenantResource extends Resource
             ])
             ->bulkActions([
                 ExportBulkAction::make()
-                ->exporter(TenantExporter::class)
+                    ->icon('entypo-export')
+                    ->exporter(TenantExporter::class)
             ]);
     }
 
