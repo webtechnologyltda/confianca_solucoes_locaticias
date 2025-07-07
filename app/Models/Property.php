@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\PropertyType;
 use App\Enum\RentalStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,7 @@ class Property extends Model implements Auditable
 
     protected $casts = [
         'status' => RentalStatus::class,
+        'type' => PropertyType::class,
     ];
 
     protected function available($query)
