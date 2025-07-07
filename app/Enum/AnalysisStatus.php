@@ -3,9 +3,10 @@
 namespace App\Enum;
 
 use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
 
-enum AnalysisStatus: int implements HasColor, HasLabel
+enum AnalysisStatus: int implements HasColor, HasLabel, HasIcon
 {
     case PENDING = 1;
     case APPROVED = 2;
