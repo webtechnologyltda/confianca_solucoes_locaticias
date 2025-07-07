@@ -56,7 +56,7 @@ class PropertyExporter extends Exporter
                 ->label('UF'),
 
             ExportColumn::make('status')
-                ->formatStateUsing(fn ($state) => $state->getLabel())
+                ->formatStateUsing(fn ($state) => $state?->getLabel() ?? 'Não informado')
                 ->label('Status'),
 
             ExportColumn::make('created_at')

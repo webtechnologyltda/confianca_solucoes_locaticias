@@ -31,7 +31,7 @@ class TenantExporter extends Exporter
 
             ExportColumn::make('status')
                 ->label('Status')
-                ->formatStateUsing(fn ($state) => $state->getLabel()),
+                ->formatStateUsing(fn ($state) => $state?->getLabel() ?? 'Não informado'),
 
             ExportColumn::make('birth_date')
                 ->label('Data de Nascimento')
@@ -56,7 +56,7 @@ class TenantExporter extends Exporter
 
             ExportColumn::make('marital_status')
                 ->label('Estado Civil')
-                ->formatStateUsing(fn ($state) => $state->getLabel()),
+                ->formatStateUsing(fn ($state) => $state?->getLabel() ?? 'Não informado'),
 
             ExportColumn::make('additional_notes')
                 ->label('Observações Adicionais'),
