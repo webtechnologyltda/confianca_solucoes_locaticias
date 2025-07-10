@@ -24,13 +24,6 @@ enum PropertyType: int implements HasColor, HasLabel
         };
     }
 
-    public static function options(): array
-    {
-        return collect(self::cases())
-            ->mapWithKeys(fn ($case) => [$case->value => $case->label()])
-            ->toArray();
-    }
-
     public function getColor(): string
     {
         return match ($this) {
@@ -41,24 +34,5 @@ enum PropertyType: int implements HasColor, HasLabel
             self::OTHER => 'gray',
             default => 'danger'
         };
-    }
-
-    public static function getType(?string $type): ?string
-    {
-        if (empty($type)) {
-            return null;
-        } elseif ($type == self::APARTMENT->value) {
-            return 'Apartamento';
-        } elseif ($type == self::HOUSE->value) {
-            return 'Casa';
-        } elseif ($type == self::OFFICE->value) {
-            return 'Escritório';
-        } elseif ($type == self::LAND->value) {
-            return 'Terreno';
-        } elseif ($type == self::OTHER->value) {
-            return 'Outro';
-        }
-
-        return null;
     }
 }
