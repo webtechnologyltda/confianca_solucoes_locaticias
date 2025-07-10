@@ -36,11 +36,4 @@ enum MaritalStatus: int implements HasColor, HasLabel
             default => 'gray'
         };
     }
-
-    public static function getSelectOptions(): array
-    {
-        return collect(self::cases())->mapWithKeys(function ($status) {
-            return [$status->value => $status->getLabel()];
-        })->toArray();
-    }
 }

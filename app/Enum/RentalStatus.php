@@ -3,9 +3,10 @@
 namespace App\Enum;
 
 use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
 
-enum RentalStatus: int implements HasColor, HasLabel
+enum RentalStatus: int implements HasColor, HasLabel, HasIcon
 {
     case AVAILABLE = 1;
     case RENTED = 2;

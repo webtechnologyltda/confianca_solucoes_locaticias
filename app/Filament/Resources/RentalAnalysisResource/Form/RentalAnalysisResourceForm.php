@@ -343,7 +343,7 @@ abstract class RentalAnalysisResourceForm
 
                                     $property = \App\Models\Property::find($propertyId);
 
-                                    return PropertyType::getType($property?->type) ?? 'Tipo não cadastrado';
+                                    return $property?->type?->getLabel() ?? 'Tipo não cadastrado';
                                 }),
 
                             Placeholder::make('property_address')
