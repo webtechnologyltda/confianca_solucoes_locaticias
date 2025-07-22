@@ -18,6 +18,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Malzariey\FilamentDaterangepickerFilter\Fields\DateRangePicker;
 use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
 
 class RentalAnalysisResource extends Resource
@@ -87,66 +88,54 @@ class RentalAnalysisResource extends Resource
 
                 Filter::make('contract_signature_date')
                     ->form([
-                        DatePicker::make('contract_signature_date')
-                            ->label('Assinado de')
-                            ->format('Y-m-d')
-                            ->displayFormat('d/m/Y')
-                            ->native(false),
-                        DatePicker::make('hora_saida')
-                            ->label('Assinado até')
-                            ->format('Y-m-d')
-                            ->displayFormat('d/m/Y')
-                            ->native(false),
+                        DateRangePicker::make('contract_signature_date')
+                            ->label('Data de assinatura do contrato'),
                     ])
-                    ->label('Data de Assinatura do Contrato')
-                    ->query(function (Builder $query, array $data) {
+                    ->query(function (Builder $query, array $data): Builder {
                         return $query
-                            ->when($data['contract_signature_date'], function (Builder $query, $date) {
-                                $dateStartOfDay = Carbon::parse($date)
-                                    ->startOfDay();
+                            ->when(
+                                $data['contract_signature_date'],
+                                function (Builder $query, $dateRangeString) {
+                                    $dates = explode(' - ', $dateRangeString);
 
-                                return $query->where('contract_signature_date', '>=', $dateStartOfDay);
-                            })
-                            ->when($data['hora_saida'], function (Builder $query, $date) {
-                                $dateEndOfDay = Carbon::parse($date)
-                                    ->endOfDay();
+                                    if (count($dates) !== 2) {
+                                        return $query;
+                                    }
 
-                                return $query->where('contract_signature_date', '<=', $dateEndOfDay);
-                            });
+                                    $startDate = Carbon::createFromFormat('d/m/Y', $dates[0])->startOfDay();
+                                    $endDate = Carbon::createFromFormat('d/m/Y', $dates[1])->endOfDay();
+
+                                    return $query->whereBetween('contract_signature_date', [$startDate, $endDate]);
+                                }
+                            );
                     }),
 
 
                 Filter::make('contract_renewal_date')
                     ->form([
-                        DatePicker::make('contract_renewal_date')
-                            ->label('Renovado de')
-                            ->format('Y-m-d')
-                            ->displayFormat('d/m/Y')
-                            ->native(false),
-                        DatePicker::make('hora_saida')
-                            ->label('Renovado até')
-                            ->format('Y-m-d')
-                            ->displayFormat('d/m/Y')
-                            ->native(false),
+                        DateRangePicker::make('contract_renewal_date')
+                            ->label('Data de renovação do contrato'),
                     ])
-                    ->label('Data de Assinatura do Contrato')
-                    ->query(function (Builder $query, array $data) {
+                    ->query(function (Builder $query, array $data): Builder {
                         return $query
-                            ->when($data['contract_renewal_date'], function (Builder $query, $date) {
-                                $dateStartOfDay = Carbon::parse($date)
-                                    ->startOfDay();
+                            ->when(
+                                $data['contract_renewal_date'],
+                                function (Builder $query, $dateRangeString) {
+                                    $dates = explode(' - ', $dateRangeString);
 
-                                return $query->where('contract_renewal_date', '>=', $dateStartOfDay);
-                            })
-                            ->when($data['hora_saida'], function (Builder $query, $date) {
-                                $dateEndOfDay = Carbon::parse($date)
-                                    ->endOfDay();
+                                    if (count($dates) !== 2) {
+                                        return $query;
+                                    }
 
-                                return $query->where('contract_renewal_date', '<=', $dateEndOfDay);
-                            });
+                                    $startDate = Carbon::createFromFormat('d/m/Y', $dates[0])->startOfDay();
+                                    $endDate = Carbon::createFromFormat('d/m/Y', $dates[1])->endOfDay();
+
+                                    return $query->whereBetween('contract_renewal_date', [$startDate, $endDate]);
+                                }
+                            );
                     }),
 
-            ],layout: FiltersLayout::AboveContent)
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
