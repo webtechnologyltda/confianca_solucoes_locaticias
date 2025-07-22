@@ -76,12 +76,14 @@ abstract class TenantForm
                 ->columnSpanFull()
                 ->schema([
                     Repeater::make('documents')
+                        ->addActionLabel('Adicionar documento')
+                        ->label('Documentos')
                         ->relationship('documents')
                         ->schema([
                             TextInput::make('name')->label('Nome do documento')->required(),
 
                             AdvancedFileUpload::make('path')
-                                ->label('Documento')
+                                ->label('Anexo')
                                 ->required()
                                 ->downloadable()
                                 ->directory('rental-analysis')
@@ -96,7 +98,6 @@ abstract class TenantForm
                                 ->pdfNavPanes(false)
                                 ->openable()
                                 ->multiple()
-                                ->maxSize(2048)
                                 ->uploadingMessage('Carregando...')
                                 ->previewable(true),
 
