@@ -7,12 +7,18 @@ use App\Filament\Exports\RentalAnalysisExporter;
 use App\Filament\Resources\RentalAnalysisResource\Form\RentalAnalysisResourceForm;
 use App\Filament\Resources\RentalAnalysisResource\Pages;
 use App\Models\RentalAnalysis;
+use Carbon\Carbon;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ExportBulkAction;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Malzariey\FilamentDaterangepickerFilter\Fields\DateRangePicker;
 use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
 
 class RentalAnalysisResource extends Resource
@@ -79,6 +85,56 @@ class RentalAnalysisResource extends Resource
                     ->multiple()
                     ->label('Status')
                     ->options(AnalysisStatus::class),
+
+                Filter::make('contract_signature_date')
+                    ->form([
+                        DateRangePicker::make('contract_signature_date')
+                            ->label('Data de assinatura do contrato'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['contract_signature_date'],
+                                function (Builder $query, $dateRangeString) {
+                                    $dates = explode(' - ', $dateRangeString);
+
+                                    if (count($dates) !== 2) {
+                                        return $query;
+                                    }
+
+                                    $startDate = Carbon::createFromFormat('d/m/Y', $dates[0])->startOfDay();
+                                    $endDate = Carbon::createFromFormat('d/m/Y', $dates[1])->endOfDay();
+
+                                    return $query->whereBetween('contract_signature_date', [$startDate, $endDate]);
+                                }
+                            );
+                    }),
+
+
+                Filter::make('contract_renewal_date')
+                    ->form([
+                        DateRangePicker::make('contract_renewal_date')
+                            ->label('Data de renovação do contrato'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['contract_renewal_date'],
+                                function (Builder $query, $dateRangeString) {
+                                    $dates = explode(' - ', $dateRangeString);
+
+                                    if (count($dates) !== 2) {
+                                        return $query;
+                                    }
+
+                                    $startDate = Carbon::createFromFormat('d/m/Y', $dates[0])->startOfDay();
+                                    $endDate = Carbon::createFromFormat('d/m/Y', $dates[1])->endOfDay();
+
+                                    return $query->whereBetween('contract_renewal_date', [$startDate, $endDate]);
+                                }
+                            );
+                    }),
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
