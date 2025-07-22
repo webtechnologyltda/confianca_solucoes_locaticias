@@ -4,7 +4,10 @@ namespace App\Filament\Resources\TenantResource\Form;
 
 use App\Enum\MaritalStatus;
 use App\Enum\TenantStatus;
+use Asmit\FilamentUpload\Enums\PdfViewFit;
+use Asmit\FilamentUpload\Forms\Components\AdvancedFileUpload;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -69,6 +72,37 @@ abstract class TenantForm
                         ->columnSpanFull(),
 
                 ]),
+            Section::make()
+                ->columnSpanFull()
+                ->schema([
+                    Repeater::make('documents')
+                        ->addActionLabel('Adicionar documento')
+                        ->label('Documentos')
+                        ->relationship('documents')
+                        ->schema([
+                            TextInput::make('name')->label('Nome do documento')->required(),
+
+                            AdvancedFileUpload::make('path')
+                                ->label('Anexo')
+                                ->required()
+                                ->downloadable()
+                                ->directory('rental-analysis')
+                                ->acceptedFileTypes(['application/pdf', 'image/*'])
+                                ->maxFiles(5)
+                                ->maxSize(2048) // 10MB
+                                ->panelLayout('grid')
+                                ->pdfDisplayPage(1)
+                                ->pdfFitType(PdfViewFit::FITBH)
+                                ->pdfPreviewHeight(320)
+                                ->pdfZoomLevel(100)
+                                ->pdfNavPanes(false)
+                                ->openable()
+                                ->multiple()
+                                ->uploadingMessage('Carregando...')
+                                ->previewable(true),
+
+                        ]),
+                ])
         ];
     }
 }
