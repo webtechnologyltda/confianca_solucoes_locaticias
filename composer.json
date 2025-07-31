@@ -31,7 +31,7 @@
         "leandrocfe/filament-ptbr-form-fields": "3.2.1",
         "livewire/flux": "^2.1.1",
         "livewire/volt": "^1.7.0",
-        "malzariey/filament-daterangepicker-filter": "^4.0",
+        "malzariey/filament-daterangepicker-filter": "^3.4.3",
         "owenvoke/blade-entypo": "^2.3",
         "owenvoke/blade-fontawesome": "^2.9",
         "secondnetwork/blade-tabler-icons": "^3.34",
